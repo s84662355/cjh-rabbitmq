@@ -58,11 +58,7 @@ class CustomRabbitmqInstance{
        return $this;
     }
 
-
     public function 
-
-
-
-
+ 
 
 }

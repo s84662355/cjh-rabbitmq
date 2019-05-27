@@ -22,11 +22,12 @@ return [
                      'expiration' => 0,
                      'routing_key' => '',
                      'exchange' => '',
+                     'queue' => '',
                  ],
               ],
           ],
           'exchange'=> [
-             'default' => env('RABBITMQ_EXCHANGE_DRIVER', 'default'),
+           //  'default' => env('RABBITMQ_EXCHANGE_DRIVER', 'default'),
              'driver' => [
                  'default' => [
                     'type' => 'direct',
@@ -36,11 +37,14 @@ return [
               ],
           ],
           'queue'   => [
-             'default' => env('RABBITMQ_QUEUE_DRIVER', 'default'),
+          //   'default' => env('RABBITMQ_QUEUE_DRIVER', 'default'),
              'driver' => [
                  'default' => [
                      'durable' => true,
-                     'name'. => '',
+                     'name' => '',
+                     'routing_key' => '',
+                     'exchange' => '',
+                     'consume' => '',
                  ],
               ],
 

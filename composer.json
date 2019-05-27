@@ -1,0 +1,17 @@
+{
+    "name": "chenjiahao/rabbitmq",
+    "description": "rabbitmq laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "chenjiahao",
+            "email": "271375247@qq.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "CustomRabbitmq\\": "src/"
+        }
+    }    
+}

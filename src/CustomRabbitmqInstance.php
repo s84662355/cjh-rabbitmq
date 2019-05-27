@@ -13,12 +13,12 @@ class CustomRabbitmqInstance{
 	private $queue_pool = [];
 	private $publisher_instance = null;
 
-	public function __construct( $config )
-	{
-		$this->connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
-		$this->channel = $this->connection->channel(); 
-		$this->publisher_instance = new Publisher($this->channel,$config['confirm_select']);
-	}
+	  public function __construct( $config )
+	  {
+	 	  $this->connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+		  $this->channel = $this->connection->channel(); 
+		  $this->publisher_instance = new Publisher($this->channel,$config['confirm_select']);
+	  }
 
     public function Exchange($name,$config)
     {
@@ -58,7 +58,11 @@ class CustomRabbitmqInstance{
        return $this;
     }
 
-    public function 
+    public function consume($queue,$callback)
+    {
+        new Consume($this->channel,$queue,$callback)->basic_consume();
+        return $this;
+    }
  
 
 }

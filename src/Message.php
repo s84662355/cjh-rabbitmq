@@ -9,6 +9,7 @@ class Message{
     private  $body = [];
     private  $routing_key = '';
     private  $exchange = '';
+    private  $queue = '';
     private  $config = [
       'content_type' => 'text/plain',
       'delivery_mode'=> AMQPMessage::DELIVERY_MODE_PERSISTENT
@@ -31,7 +32,7 @@ class Message{
     /*
      expiration
     */
-	public function __construct(array $body,array $config = [])
+	public function __construct($body,array $config = [])
 	{
 		$this->body = $body;
 
@@ -62,7 +63,12 @@ class Message{
 
         if(!empty($config['routing_key'])){
             $this->routing_key = $config['routing_key'];
-        }  
+        } 
+
+        if(!empty($config['queue'])){
+            $this->queue = $config['queue'];
+        } 
+
     }
 
 	public function getDurable()
@@ -82,7 +88,7 @@ class Message{
     
     public function getRoutingKey()
     {
-        return $this->routing_key;
+        return !empty($this->routing_key) ?  $this->routing_key : $this->queue   ;
     }
 
     public function getExchange()
@@ -90,6 +96,8 @@ class Message{
     	return $this->exchange;
     }
 
+
+    /*
     public function setRoutingKey($routing_key = '')
     {
     	$this->routing_key = $routing_key;
@@ -99,6 +107,8 @@ class Message{
     {
     	$this->exchange = $exchange;
     }
+
+    */
     
 
 	/*

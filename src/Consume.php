@@ -6,12 +6,8 @@ use PhpAmqpLib\Channel\AMQPChannel;
 class Consume{
 
 	private $callback = '';
-
 	private $channel = null;
-
 	private $queue = '';
-
-	 
  
 	public function __construct(AMQPChannel $channel,$queue,$callback)
 	{

@@ -42,7 +42,7 @@ class RabbitmqDriver{
 
     public function QueueBind($queue,$exchange,$routing_key)
     {
-       $channel->queue_bind($queue, $exchange,$routing_key);
+       $this->channel->queue_bind($queue, $exchange,$routing_key);
        return $this;
     }
 

@@ -104,7 +104,7 @@ class RabbitmqJob{
         {
             $exchange = $consume_driver['exchange'];
             $rabbit_driver->exchange($exchange['name'], $exchange['type'] ,$exchange['durable'])
-                          ->QueueBind($consume_driver['queue'],$exchange['name'],$exchange['routing_ke']);
+                          ->QueueBind($consume_driver['queue'],$exchange['name'],$exchange['routing_key']);
 
                           //->consume($consume_driver['queue'],$consume_driver['consumer_tag'],$consume_driver['listener'])
                          // ->basic_consume();

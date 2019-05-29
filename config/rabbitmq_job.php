@@ -4,30 +4,54 @@ return [
       'default' => env('RABBITMQ_MSG_DRIVER', 'first'),
       'driver' => [
           'first' => [
-              'host' => env('RABBITMQ_HOST', '127.0.0.1'),
-              'port' => env('RABBITMQ_PORT', 5672),
+              'host' =>  env('RABBITMQ_HOST', '127.0.0.1'),
+              'port' =>  env('RABBITMQ_PORT', 5672),
               'vhost' => env('RABBITMQ_VHOST', '/'),
-              'login' => env('RABBITMQ_LOGIN', 'guest'),
+              'username' => env('RABBITMQ_LOGIN', 'guest'),
               'password' => env('RABBITMQ_PASSWORD', 'guest'),
               'confirm_select' => true,
 
               'publish' => [
-                 'default' => env('RABBITMQ_MSG_DRIVER', 'first'),
+                 'default' => env('RABBITMQ_MSG_DRIVER', '1'),
                  'driver' => [
-                     'first' => [
+                     '1' => [
+                         'durable' => true,
+                         'expiration' => 0,
+                         'exchange' => null,
+
+                         'exchange' => null,
+                         /*
+                             [
+                            'name' => '1111',
+                            'type' => 'direct',
+                            'durable' => true,
+                            'routing_key' => '1111',
+                         ],
+                         */
+
+                         'queue' => [
+                            'durable' => true,
+                            'name' => '1322423',
+                         ]
+                     ],
+
+                     '2' => [
                          'durable' => true,
                          'expiration' => 0,
                          'exchange' => [
-                            'name' = '',
-                            'type' => 'direct',
-                            'durable' => true,
-                            'routing_key' => '', 
+                             'name' => '22222',
+                             'type' => 'direct',
+                             'durable' => true,
+                             'routing_key' => '2222',
                          ],
                          'queue' => [
-                            'durable' => true,
-                            'name' => '',
+                             'durable' => true,
+                             'name' => '',
                          ]
                      ],
+
+
+
                   ],
               ],
 
@@ -36,14 +60,17 @@ return [
                    'driver' => [
                        'first' => [
                            'durable' => true,
-                           'queue' => '',
-                           'listener' => '',
+                           'consumer_tag' => '1322423',
+                           'queue' => '1322423',
+                           'listener' => 'App\TestConsume',
+                           /*
                            'exchange' => [
-                              'name' = '',
-                              'type' => 'direct',
+                              'name'  => '',
+                              'type'  => 'direct',
                               'durable' => true,
                               'routing_key' => '', 
                            ],
+                           */
                         ],
                     ],
               ],

@@ -8,7 +8,9 @@
             "email": "271375247@qq.com"
         }
     ],
-    "require": {},
+    "require": {
+        "php-amqplib/php-amqplib": "^2.9"
+    },
     "autoload": {
         "psr-4": {
             "CustomRabbitmq\\": "src/"

@@ -52,9 +52,9 @@ class RabbitmqDriver{
        return $this;
     }
 
-    public function send()
+    public function send($body,$config)
     {
-       $this->publisher_instance->send();
+       $this->publisher_instance->send(new Message($body,$config));
        return $this;
     }
 
@@ -67,6 +67,22 @@ class RabbitmqDriver{
     public function consume($queue,$consumer_tag,$callback)
     {
        return new Consume($this->channel,$queue,$consumer_tag,$callback);
+    }
+
+
+    public function tx_select()
+    {
+        $this->channel->tx_select();
+    }
+
+    public function tx_commit()
+    {
+        $this->channel->tx_commit();
+    }
+
+    public function tx_rollback()
+    {
+        $this->channel->tx_rollback();
     }
 
     public function __destruct()

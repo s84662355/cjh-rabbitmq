@@ -49,6 +49,8 @@ class RabbitmqJob{
         return $this->config_pool[$driver];
     }
 
+    /*
+
     public function publisher($callback )
     {
         $driver = $this->select_driver ;
@@ -65,6 +67,35 @@ class RabbitmqJob{
         }
         $rabbit_driver->send();
         return $this;
+    }
+    */
+
+    public function send($body,$msg_driver_name = false)
+    {
+        $rabbit_driver =  $this->driver();
+
+        $driver_config = $this->driver_config( );
+     
+        if(!$msg_driver_name)  $msg_driver_name = $driver_config['publish']['default'];
+        $msg_driver = $driver_config['publish']['driver'];
+        $this->message($body,$rabbit_driver,$msg_driver[$msg_driver_name]);
+        $rabbit_driver->($body,$msg_driver[$msg_driver_name]);
+        return $this;
+    }
+
+    public function tx_select()
+    {
+        $this->driver()->tx_select();
+    }
+
+    public function tx_commit()
+    {
+        $this->driver()->tx_commit();
+    }
+
+    public function tx_rollback()
+    {
+        $this->driver()->tx_rollback();
     }
 
     private function message($body,$rabbit_driver,$config)

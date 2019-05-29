@@ -24,6 +24,12 @@ class Publisher{
         array_push($this->msg_queue, $msg);
 	}
 
+	public function send(Message $msg)
+	{
+		$this->channel->basic_publish($msg->getAmqpMsg(),$msg->getExchange(),$msg->getRoutingKey());
+	}
+    
+    /*
 	public function send()
 	{
 		if($this->confirm_select)  
@@ -43,6 +49,7 @@ class Publisher{
 			$this->channel->wait_for_pending_acks_returns();
 		}
 	}
+	8/
 
 
 }

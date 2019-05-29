@@ -27,16 +27,11 @@ class RabbitMQCommand  extends Command
     public function handle()
     {
         $this->info("begin");
-
         $connection = $this->option('c');
         $queue      = $this->option('q');
-
         $job = new RabbitmqJob();
-
         if(!empty($connection))  $job->select($connection);
-
         $queue = empty($queue) ? false : $queue;
-
         $job->consume($queue);
 
     }

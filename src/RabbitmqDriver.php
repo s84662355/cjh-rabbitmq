@@ -13,11 +13,12 @@ class RabbitmqDriver{
   	private $queue_pool = [];
   	private $publisher_instance = null;
 
-	  public function __construct( $config )
-	  {
+  	public function __construct( $config )
+    {
+        ///
 	 	  $this->connection = new AMQPStreamConnection($config['host'],$config['port'], $config['username'], $config['password'],$config['vhost']);
 		  $this->channel = $this->connection->channel();
-	  }
+    }
 
     public function exchange($name,$type = 'direct',$durable = true)
     {
@@ -39,9 +40,9 @@ class RabbitmqDriver{
     	return $this;
     }
 
-    public function QueueBind($exchange,$queue)
+    public function QueueBind($queue,$exchange,$routing_key)
     {
-       $channel->queue_bind($queue, $exchange);
+       $channel->queue_bind($queue, $exchange,$routing_key);
        return $this;
     }
 
@@ -63,13 +64,14 @@ class RabbitmqDriver{
        return $this;
     }
 
-
-/*
-    public function consume($queue,$callback)
+    public function consume($queue,$consumer_tag,$callback)
     {
-       return new Consume($this->channel,$queue,$callback);
+       return new Consume($this->channel,$queue,$consumer_tag,$callback);
     }
-*/
 
-
+    public function __destruct()
+    {
+        $this->channel->close();
+        $this->connection->close();
+    }
 }

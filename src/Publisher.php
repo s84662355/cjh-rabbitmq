@@ -13,7 +13,7 @@ class Publisher{
 
 	private static $instance = null;
 
-	private function __construct(AMQPChannel $channel,boolean $confirm_select = true)
+	public function __construct(AMQPChannel $channel,  $confirm_select )
 	{
 		$this->channel = $channel;
 		$this->confirm_select = $confirm_select;
@@ -41,8 +41,7 @@ class Publisher{
 		if($this->confirm_select)  
 		{
 			$this->channel->wait_for_pending_acks_returns();
-		}		 
-
+		}
 	}
 
 

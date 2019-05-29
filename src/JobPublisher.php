@@ -20,10 +20,9 @@ class JobPublisher{
     public function push($body,$driver = false)
     {
         if(!$driver) $driver = $this->default_driver;
-
         ###以后抛出错误
-        if(empty($this->driver_array[$driver])) return false;
-        $this->msg_queue = [
+        if(empty($this->driver_array[$driver])) throw new \Exception("消息驱动不存在");
+        $this->msg_queue[] = [
              'driver' => $driver ,
              'body' => $body,
         ];

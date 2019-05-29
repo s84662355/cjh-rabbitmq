@@ -8,25 +8,28 @@ class Consume{
 	private $callback = '';
 	private $channel = null;
 	private $queue = '';
+	private $consumer_tag = '';
  
-	public function __construct(AMQPChannel $channel,$queue,$callback)
+	public function __construct(AMQPChannel $channel,$queue,$consumer_tag,$callback)
 	{
           $this->callback = new $callback();
           $this->channel = $channel;
           $this->queue = $queue;
+          $this->consumer_tag = $consumer_tag;
           $channel->basic_qos(null, 1, null);
 	}
 
 	public function basic_consume()
 	{
-		$this->channel->basic_consume($this->queue, '', false, false, false, false, [$this,'process_message']);
+		$this->channel->basic_consume($this->queue, $this->consumer_tag, false, false, false, false, [$this,'process_message']);
+        while($this->channel->is_consuming()) {
+            $this->channel->wait();
+        }
 	}
 
 	public function process_message(AMQPMessage $msg)
 	{
-
-        $res = call_user_func_array([$this->callback,'process_message'],[new Message($msg)]);
-
+        $res = call_user_func_array([$this->callback,'process_message'],[$msg->getBody()]);
         if($res)
         {
         	 ///出列

@@ -15,20 +15,6 @@ class Message{
       'delivery_mode'=> AMQPMessage::DELIVERY_MODE_PERSISTENT
     ];
 
-    public function __construct(AMQPMessage $msg)
-    {
-         $this->amqp_msg = $msg;
-         $data = $msg->getBody();
-         $data = json_decode($data,true);
-         if(!empty($data))
-         {
-            $this->body = $data['body'];
-            $config = $data['config'];
-            $this->iniConfig( $config );
-         }
-
-    }
- 
     /*
      expiration
     */
@@ -40,7 +26,7 @@ class Message{
 
         $data = [
            'body' => $body,
-           'config' => $config;
+           'config' => $config
         ];
  
 		$this->amqp_msg = new AMQPMessage(json_encode($data),$this->config);
@@ -53,13 +39,15 @@ class Message{
             $this->config['delivery_mode'] = AMQPMessage::DELIVERY_MODE_NON_PERSISTENT;
         }
 
+        if(!empty($config['expiration'])){
+              $this->config['expiration'] = $config['expiration'];
+        }
+
+
         if(!empty($config['exchange'])){
             $this->exchange = $config['exchange'];
         }
 
-        if(!empty($config['expiration'])){
-              $this->config['expiration'] = $config['expiration'];
-        }
 
         if(!empty($config['routing_key'])){
             $this->routing_key = $config['routing_key'];

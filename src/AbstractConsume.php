@@ -5,5 +5,5 @@ namespace CustomRabbitmq;
 
 abstract class AbstractConsume{
 
-	 abstract public function process_message(Message $msg) : bool
+	 abstract public function process_message(string $body) : bool;
 }

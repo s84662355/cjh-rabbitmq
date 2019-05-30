@@ -13,7 +13,6 @@ class RabbitmqJob{
     private $select_driver = '';
     private $config = [];
 
-
     public function __construct($config , $driver = false  )
     {
         $this->config = $config;
@@ -21,7 +20,6 @@ class RabbitmqJob{
         $this->select_driver = $this->default_driver;
         $this->driver();
     }
-
 
     ###切换连接
     public function select($driver = false)
@@ -49,26 +47,7 @@ class RabbitmqJob{
         return $this->config_pool[$driver];
     }
 
-    /*
 
-    public function publisher($callback )
-    {
-        $driver = $this->select_driver ;
-        $driver_config = $this->driver_config($driver);
-        $msg_driver = $driver_config['publish']['driver'];
-        $msg_default_driver = $driver_config['publish']['default'];
-        $job_publisher = new JobPublisher($msg_driver , $msg_default_driver);
-        $callback($job_publisher);
-        $msg_queue = $job_publisher->getQueue();
-        $rabbit_driver = $this->driver($driver);
-        $rabbit_driver->publisher($driver_config ['confirm_select'] ) ;
-        foreach ($msg_queue as $key => $value) {
-            $this->message($value['body'],$rabbit_driver,$msg_driver[$value['driver']]);
-        }
-        $rabbit_driver->send();
-        return $this;
-    }
-    */
 
     public function send($body,$msg_driver_name = false)
     {
@@ -79,7 +58,7 @@ class RabbitmqJob{
         if(!$msg_driver_name)  $msg_driver_name = $driver_config['publish']['default'];
         $msg_driver = $driver_config['publish']['driver'];
         $this->message($body,$rabbit_driver,$msg_driver[$msg_driver_name]);
-        $rabbit_driver->($body,$msg_driver[$msg_driver_name]);
+
         return $this;
     }
 
@@ -103,22 +82,38 @@ class RabbitmqJob{
         if(!empty($config['exchange']))
         {
             $rabbit_driver->exchange($config['exchange']['name'], $config['exchange']['type'] ,$config['exchange']['durable']);
+            /*
             $rabbit_driver->pushMessage($body,[
                     'durable' => $config['durable'],
                     'expiration' => $config['expiration'],
                     'routing_key' => $config['exchange']['routing_key'],
                     'exchange' => $config['exchange']['name'],
             ]);
+            */
+            $rabbit_driver->send($body,[
+                'durable' => $config['durable'],
+                'expiration' => $config['expiration'],
+                'routing_key' => $config['exchange']['routing_key'],
+                'exchange' => $config['exchange']['name'],
+            ]);
+
             return $this;
         }
         if(!empty($config['queue']))
         {
             $rabbit_driver->queue($config['queue']['name'],$config['queue']['durable']);
+            $rabbit_driver->send($body,[
+                'durable' => $config['durable'],
+                'expiration' => $config['expiration'],
+                'queue' => $config['queue']['name'],
+            ]);
+            /*
             $rabbit_driver->pushMessage($body,[
                     'durable' => $config['durable'],
                     'expiration' => $config['expiration'],
                     'queue' => $config['queue']['name'],
             ]);
+            */
 
         }
         return $this;

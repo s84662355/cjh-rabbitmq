@@ -11,8 +11,9 @@ class Message{
     private  $exchange = '';
     private  $queue = '';
     private  $config = [
-      'content_type' => 'text/plain',
-      'delivery_mode'=> AMQPMessage::DELIVERY_MODE_PERSISTENT
+        'content_type' => 'text/plain',
+        'delivery_mode'=> AMQPMessage::DELIVERY_MODE_PERSISTENT,
+        'message_id' => "1234567890",
     ];
 
     /*

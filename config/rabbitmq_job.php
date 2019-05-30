@@ -9,7 +9,7 @@ return [
               'vhost' => env('RABBITMQ_VHOST', '/'),
               'username' => env('RABBITMQ_LOGIN', 'guest'),
               'password' => env('RABBITMQ_PASSWORD', 'guest'),
-              'confirm_select' => true,
+
 
               'publish' => [
                  'default' => env('RABBITMQ_MSG_DRIVER', '1'),
@@ -17,24 +17,20 @@ return [
                      '1' => [
                          'durable' => true,
                          'expiration' => 0,
-                         'exchange' => null,
-
-                         'exchange' => null,
-                         /*
+                          /*
+                         'exchange' =>
                              [
                             'name' => '1111',
                             'type' => 'direct',
                             'durable' => true,
                             'routing_key' => '1111',
                          ],
-                         */
-
+                          */
                          'queue' => [
                             'durable' => true,
                             'name' => '1322423',
                          ]
                      ],
-
                      '2' => [
                          'durable' => true,
                          'expiration' => 0,
@@ -50,8 +46,6 @@ return [
                          ]
                      ],
 
-
-
                   ],
               ],
 
@@ -63,17 +57,16 @@ return [
                            'consumer_tag' => '1322423',
                            'queue' => '1322423',
                            'listener' => 'App\TestConsume',
-                           /*
                            'exchange' => [
-                              'name'  => '',
+                              'name'  => '1111',
                               'type'  => 'direct',
                               'durable' => true,
-                              'routing_key' => '', 
+                              'routing_key' => '1111',
                            ],
-                           */
+
                         ],
                     ],
-              ],       
+              ],
           ]
       ],
 ];

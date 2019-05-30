@@ -17,6 +17,7 @@ class JobPublisher{
         $this->default_driver = $default_driver;
     }
 
+    /*
     public function push($body,$driver = false)
     {
         if(!$driver) $driver = $this->default_driver;
@@ -27,6 +28,7 @@ class JobPublisher{
              'body' => $body,
         ];
     }
+    */
 
     public function getQueue()
     {

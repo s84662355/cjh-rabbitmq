@@ -46,21 +46,17 @@ class RabbitmqDriver{
        return $this;
     }
 
-    public function pushMessage($body,$config)
-    {
-       $this->publisher_instance->push(new Message($body,$config));
-       return $this;
-    }
 
     public function send($body,$config)
     {
+       $this->publisher();
        $this->publisher_instance->send(new Message($body,$config));
        return $this;
     }
 
-    public function publisher($confirm_select = true) 
+    public function publisher()
     {
-       if($this->publisher_instance == null) $this->publisher_instance = new Publisher($this->channel,$confirm_select);
+       if($this->publisher_instance == null) $this->publisher_instance = new Publisher($this->channel);
        return $this;
     }
 

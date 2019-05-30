@@ -36,7 +36,15 @@ class Consume{
             $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
         }else{
         	///重新入列
-        	$message->delivery_info['channel']->basic_nack($message->delivery_info['delivery_tag']);
+          //  $msg->delivery_info['channel']->basic_nack($msg->delivery_info['delivery_tag'],false,true);
+           //// $msg->setBody(time().'67859657096584763524rebghnjk');
+
+            $msg->delivery_info['channel']->basic_reject($msg->delivery_info['delivery_tag'],true);
+
+
+
+            sleep(2);
+          //  echo 'delivery_tag::'.$msg->delivery_info['delivery_tag'].':::';
         }
 	}
 }

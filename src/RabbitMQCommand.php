@@ -28,7 +28,7 @@ class RabbitMQCommand  extends Command
     {
         $connection = $this->option('c');
         $queue      = $this->option('q');
-        $job = new RabbitmqJob();
+        $job = app('RabbitMQJob');
         if(!empty($connection))  $job->select($connection);
         $queue = empty($queue) ? false : $queue;
         $job->consume($queue);

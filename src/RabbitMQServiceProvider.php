@@ -20,7 +20,7 @@ class RabbitMQServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
-        CustomRabbitmq\RabbitMQCommand::class,
+         RabbitMQCommand::class,
     ];
 
 

@@ -13,7 +13,6 @@ use CustomRabbitmq\RabbitmqJob;
 use swoole_process;
 use Swoole\Process\Pool;
 
-
 class SwooleRabbitMQCommand  extends Command
 {
 

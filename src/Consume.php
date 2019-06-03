@@ -30,21 +30,15 @@ class Consume{
 	public function process_message(AMQPMessage $msg)
 	{
         $res = call_user_func_array([$this->callback,'process_message'],[$msg->getBody()]);
-        if($res)
+
+        if($res == AbstractConsume::ACK)
         {
-        	 ///出列
+           ///出列
             $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
-        }else{
-        	///重新入列
-          //  $msg->delivery_info['channel']->basic_nack($msg->delivery_info['delivery_tag'],false,true);
-           //// $msg->setBody(time().'67859657096584763524rebghnjk');
-
+        }else if($res == AbstractConsume::REJECT){
             $msg->delivery_info['channel']->basic_reject($msg->delivery_info['delivery_tag'],true);
-
-
-
-            sleep(2);
-          //  echo 'delivery_tag::'.$msg->delivery_info['delivery_tag'].':::';
-        }
+        }else if($res == AbstractConsume::EXIT){
+            $msg->delivery_info['channel']->basic_cancel($msg->delivery_info['consumer_tag']);
+        }   
 	}
 }

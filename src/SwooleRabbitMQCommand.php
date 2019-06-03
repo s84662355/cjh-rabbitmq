@@ -43,6 +43,7 @@ class SwooleRabbitMQCommand  extends Command
     public function work_callback(swoole_process $worker)
     {
        $this->call('RabbitMQCommand', ['--c' => $this->arg['c'], '--q' => $this->arg['q']]);
+       $worker->exit();
     }
 
 

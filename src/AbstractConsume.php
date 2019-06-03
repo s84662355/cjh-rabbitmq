@@ -5,5 +5,10 @@ namespace CustomRabbitmq;
 
 abstract class AbstractConsume{
 
-	 abstract public function process_message(string $body) : bool;
+	const ACK = 200;
+	const REJECT = 300;
+	const EXIT = 400;
+
+
+	abstract public function process_message(string $body) : bool;
 }

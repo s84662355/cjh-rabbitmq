@@ -15,12 +15,13 @@ use Illuminate\Support\ServiceProvider;
 
 class RabbitMQServiceProvider extends ServiceProvider
 {
-
     /**
      * @var array
      */
     protected $commands = [
          RabbitMQCommand::class,
+         SwooleRabbitMQCommand::class,
+         SwooleMultiRabbitMQCommand::class,
     ];
 
 

@@ -13,12 +13,12 @@ use CustomRabbitmq\RabbitmqJob;
 use swoole_process;
 use Swoole\Process\Pool;
 
-class SwooleRabbitMQCommand  extends Command
+class SwooleMultiRabbitMQCommand extends Command
 {
 
-    protected $signature = 'SwooleRabbitMQCommand  {--c=} {--q=}  ';
+    protected $signature = 'SwooleMultiRabbitMQCommand {--c=} {--q=} {--w=}';
 
-    protected $description = 'SwooleRabbitMQCommand Command description';
+    protected $description = 'SwooleMultiRabbitMQCommand Command description';
 
     protected $swoole_work = null;
 
@@ -34,16 +34,23 @@ class SwooleRabbitMQCommand  extends Command
 
     public function handle()
     {
+ 
         $this->arg['c'] = $this->option('c');
         $this->arg['q'] = $this->option('q');
+        $this->arg['w'] = (int)$this->option('w');  
+
         $this->swoole_work->start();
         $this->swoole_work->daemon();
+
     }
 
     public function work_callback(swoole_process $worker)
     {
-       $this->call('RabbitMQCommand', ['--c' => $this->arg['c'], '--q' => $this->arg['q']]);
+        for ($i=0; $i < $this->arg['w']; $i++) 
+        { 
+           $this->call('SwooleRabbitMQCommand', ['--c' => $this->arg['c'], '--q' => $this->arg['q']]);
+        }
     }
-
+ 
 
 }

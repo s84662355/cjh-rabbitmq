@@ -7,8 +7,7 @@ abstract class AbstractConsume{
 
 	const ACK = 200;
 	const REJECT = 300;
-	const EXIT = 400;
+	const CANCEL = 400;
 
-
-	abstract public function process_message(string $body) : bool;
+	abstract public function process_message(string $body) ;
 }

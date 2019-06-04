@@ -37,7 +37,7 @@ class Consume{
             $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
         }else if($res == AbstractConsume::REJECT){
             $msg->delivery_info['channel']->basic_reject($msg->delivery_info['delivery_tag'],true);
-        }else if($res == AbstractConsume::EXIT){
+        }else if($res == AbstractConsume::CANCEL){
             $msg->delivery_info['channel']->basic_cancel($msg->delivery_info['consumer_tag']);
         }   
 	}

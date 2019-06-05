@@ -27,13 +27,11 @@ class SwooleMultiRabbitMQCommand extends Command
     public function __construct()
     {
         parent::__construct();
-
-        $this->swoole_work = new swoole_process([$this,'work_callback'], true);
-
     }
 
     public function handle()
     {
+        $this->swoole_work = new swoole_process([$this,'work_callback'], true);
  
         $this->arg['c'] = $this->option('c');
         $this->arg['q'] = $this->option('q');

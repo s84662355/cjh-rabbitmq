@@ -29,7 +29,10 @@ class Consume{
 
 	public function process_message(AMQPMessage $msg)
 	{
-        $res = call_user_func_array([$this->callback,'process_message'],[$msg->getBody()]);
+        $body = $msg->getBody();
+        $body = json_decode($body,ture);
+
+        $res = call_user_func_array([$this->callback,'process_message'],[base64_decode($body['body']),$body['config']]);
 
         if($res == AbstractConsume::ACK)
         {

@@ -9,5 +9,5 @@ abstract class AbstractConsume{
 	const REJECT = 300;
 	const CANCEL = 400;
 
-	abstract public function process_message( $body) ;
+	abstract public function process_message( $body,$config) ;
 }

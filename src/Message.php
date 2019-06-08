@@ -26,7 +26,7 @@ class Message{
         $this->iniConfig( $config );
 
         $data = [
-           'body' => $body,
+           'body' => base64_encode($body) ,
            'config' => $config
         ];
  

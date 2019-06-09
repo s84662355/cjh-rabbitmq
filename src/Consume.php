@@ -30,7 +30,7 @@ class Consume{
 	public function process_message(AMQPMessage $msg)
 	{
         $body = $msg->getBody();
-        $body = json_decode($body,ture);
+        $body = json_decode($body,true);
 
         $res = call_user_func_array([$this->callback,'process_message'],[base64_decode($body['body']),$body['config']]);
 

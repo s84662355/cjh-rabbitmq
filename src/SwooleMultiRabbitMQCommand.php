@@ -38,7 +38,7 @@ class SwooleMultiRabbitMQCommand extends Command
         $this->arg['w'] = (int)$this->option('w');  
 
         $this->swoole_work->start();
-        $this->swoole_work->daemon();
+        $this->swoole_work->daemon( true, false);
 
     }
 

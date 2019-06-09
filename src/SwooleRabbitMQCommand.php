@@ -12,6 +12,8 @@ use Illuminate\Console\Command;
 use CustomRabbitmq\RabbitmqJob;
 use swoole_process;
 use Swoole\Process\Pool;
+use Swoole\Timer;
+
 
 class SwooleRabbitMQCommand  extends Command
 {
@@ -34,17 +36,37 @@ class SwooleRabbitMQCommand  extends Command
 
     public function handle()
     {
-        $this->swoole_work = new swoole_process([$this,'work_callback'], true);
+     //   $this->swoole_work = new swoole_process([$this,'work_callback'], true);
+          $this->swoole_work = new swoole_process(function(){}, true);
         $this->arg['c'] = $this->option('c');
         $this->arg['q'] = $this->option('q');
         $this->swoole_work->start();
-        $this->swoole_work->daemon();
+        $this->swoole_work->daemon( true, false);
+
+        $this->dohandle();
     }
 
     public function work_callback(swoole_process $worker)
     {
-       $this->call('RabbitMQCommand', ['--c' => $this->arg['c'], '--q' => $this->arg['q']]);
-       $worker->exit();
+        $connection = $this->arg['c'];
+        $queue      = $this->arg['q'];
+        $job = app('RabbitMQJob');
+        if(!empty($connection))  $job->select($connection);
+        $queue = empty($queue) ? false : $queue;
+        $job->consume($queue);
+
+      // $this->call('RabbitMQCommand', ['--c' => $this->arg['c'], '--q' => $this->arg['q']]);
+      /// $worker->exit();
+    }
+
+    public function dohandle()
+    {
+        $connection = $this->arg['c'];
+        $queue      = $this->arg['q'];
+        $job = app('RabbitMQJob');
+        if(!empty($connection))  $job->select($connection);
+        $queue = empty($queue) ? false : $queue;
+        $job->consume($queue);  
     }
 
 

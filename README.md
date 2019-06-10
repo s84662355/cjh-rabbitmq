@@ -3,11 +3,6 @@
 
 composer require chenjiahao/rabbitmq
 
-php artisan vendor:publish 
-选择
-CustomRabbitmq\RabbitMQServiceProvider
-
-
 在配置文件app.php加入
 
 
@@ -21,3 +16,19 @@ CustomRabbitmq\RabbitMQServiceProvider
     ],
 
 
+php artisan vendor:publish 
+选择
+CustomRabbitmq\RabbitMQServiceProvider
+
+
+
+
+
+
+
+
+
+ 
+
+设置进程名称eeeee
+ php artisan RabbitMQCommand eeeee

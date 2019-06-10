@@ -18,7 +18,7 @@ class RabbitmqJob{
         $this->config = $config;
         $this->default_driver = $config['default'];//config('rabbitmq_job.driver.default');
         $this->select_driver = $this->default_driver;
-        $this->driver();
+     ////   $this->driver();
     }
 
     ###切换连接
@@ -44,6 +44,7 @@ class RabbitmqJob{
     private function driver_config($driver = false)
     {
         if(!$driver) $driver = $this->select_driver;
+        if(empty($this->config_pool[$driver]))$rabbit_driver =  $this->driver();
         return $this->config_pool[$driver];
     }
 
@@ -121,10 +122,12 @@ class RabbitmqJob{
 
     public function consume($consume_driver = false)
     {
+        $rabbit_driver = $this->driver();
+
         $driver_config  = $this->driver_config();
         if(!$consume_driver)  $consume_driver = $driver_config['consume']['default'];
         $consume_driver = $driver_config['consume']['driver'][$consume_driver];
-        $rabbit_driver = $this->driver();
+
         $rabbit_driver->queue($consume_driver['queue'],$consume_driver['durable']);
         if(!empty($consume_driver['exchange']))
         {

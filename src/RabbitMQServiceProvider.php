@@ -20,8 +20,8 @@ class RabbitMQServiceProvider extends ServiceProvider
      */
     protected $commands = [
          RabbitMQCommand::class,
-         SwooleRabbitMQCommand::class,
-         SwooleMultiRabbitMQCommand::class,
+        // SwooleRabbitMQCommand::class,
+       ///  SwooleMultiRabbitMQCommand::class,
     ];
 
 

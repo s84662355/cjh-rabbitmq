@@ -63,26 +63,32 @@ class RabbitmqJob{
         return $this;
     }
 
+    
     public function tx_select()
     {
         $this->driver()->tx_select();
     }
+
 
     public function tx_commit()
     {
         $this->driver()->tx_commit();
     }
 
+
     public function tx_rollback()
     {
         $this->driver()->tx_rollback();
     }
 
+
     private function message($body,$rabbit_driver,$config)
     {
         if(!empty($config['exchange']))
         {
+
             $rabbit_driver->exchange($config['exchange']['name'], $config['exchange']['type'] ,$config['exchange']['durable']);
+
             /*
             $rabbit_driver->pushMessage($body,[
                     'durable' => $config['durable'],
@@ -91,6 +97,7 @@ class RabbitmqJob{
                     'exchange' => $config['exchange']['name'],
             ]);
             */
+
             $rabbit_driver->send($body,[
                 'durable' => $config['durable'],
                 'expiration' => $config['expiration'],
@@ -100,6 +107,7 @@ class RabbitmqJob{
 
             return $this;
         }
+
         if(!empty($config['queue']))
         {
             $rabbit_driver->queue($config['queue']['name'],$config['queue']['durable']);
@@ -108,6 +116,7 @@ class RabbitmqJob{
                 'expiration' => $config['expiration'],
                 'queue' => $config['queue']['name'],
             ]);
+
             /*
             $rabbit_driver->pushMessage($body,[
                     'durable' => $config['durable'],
@@ -115,7 +124,6 @@ class RabbitmqJob{
                     'queue' => $config['queue']['name'],
             ]);
             */
-
         }
         return $this;
     }

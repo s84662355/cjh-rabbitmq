@@ -17,7 +17,7 @@ class RabbitMQCommand  extends Command
 
     protected $signature = 'RabbitMQCommand {name?}  {--c=} {--q=}';
 
-    protected $description = 'RabbitMQCommand Command description';
+    protected $description = ' php artisan RabbitMQCommand ';
 
     public function __construct()
     {

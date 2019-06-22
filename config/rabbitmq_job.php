@@ -46,6 +46,17 @@ return [
                          ]
                      ],
 
+                     '3' => [
+                         'durable' => true,
+                         'expiration' => 0,
+                         'timedelay'  => 5000,
+                         'queue' => [
+                             'durable' => true,
+                             'name' => 'dead-queue',
+                         ]
+                     ],
+
+
                   ],
               ],
 

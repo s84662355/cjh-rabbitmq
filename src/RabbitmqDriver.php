@@ -3,6 +3,7 @@ namespace CustomRabbitmq;
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Channel\AMQPChannel;
+use PhpAmqpLib\Wire\AMQPTable;
 
 
 class RabbitmqDriver{
@@ -30,11 +31,36 @@ class RabbitmqDriver{
       return $this;
     }
 
-    public function queue($name,$durable = true)
+    public function cache_queue($name,$durable,$dead_ex,$dead_key,$ttl)
+    {
+        if(empty($queue_pool[$name]))
+        {
+            $tale = new AMQPTable();
+            $tale->set('x-dead-letter-exchange', $dead_ex);
+            $tale->set('x-dead-letter-routing-key',$dead_key);
+            $tale->set('x-message-ttl',$ttl);
+
+            $this->channel->queue_declare($name,false,$durable,false
+                ,false,false,$tale);
+            $queue_pool[$name] = true;
+        }
+        return $this;
+    }
+
+    public function queue($name,$durable = true,$ttl = 0)
     {
     	if(empty($queue_pool[$name]))
     	{
-           $this->channel->queue_declare($name,false,$durable,false,false);
+    	    if($ttl > 0){
+                $tale = new AMQPTable();
+                $tale->set('x-message-ttl',$ttl);
+                $this->channel->queue_declare($name,false,$durable,false
+                    ,false,false,$tale);
+            }else{
+                $this->channel->queue_declare($name,false,$durable,false
+                    ,false);
+            }
+
            $queue_pool[$name] = true;
     	}
     	return $this;

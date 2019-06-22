@@ -84,6 +84,27 @@ class RabbitmqJob{
 
     private function message($body,$rabbit_driver,$config)
     {
+        if(!empty($config['timedelay']) && $config['timedelay'] > 0  )
+        {
+            $rabbit_driver->exchange("dead-exchange", 'direct' ,true);
+            $rabbit_driver->cache_queue('cache_'.$config['queue']['name'],$config['queue']['durable'],"dead-exchange",'dead_'.$config['queue']['name'].'_key',$config['timedelay']);
+
+
+            $rabbit_driver->queue($config['queue']['name'],$config['queue']['durable'],$config['expiration']);
+
+
+            $rabbit_driver->QueueBind($config['queue']['name'],"dead-exchange",'dead_'.$config['queue']['name'].'_key');
+
+            $rabbit_driver->send($body,[
+                'durable' => $config['durable'],
+                'expiration' => $config['timedelay'],
+                'queue' => 'cache_'.$config['queue']['name']
+            ]);
+
+            return $this;
+        }
+
+
         if(!empty($config['exchange']))
         {
 

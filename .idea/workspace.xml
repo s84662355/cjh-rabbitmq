@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7946a8e3-b421-4913-9aea-16f24c92ce9e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/cjh-rabbitmq.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cjh-rabbitmq.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/rabbitmq_job.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/rabbitmq_job.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RabbitMQCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/RabbitMQCommand.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RabbitmqDriver.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/RabbitmqDriver.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RabbitmqJob.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/RabbitmqJob.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +18,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RabbitmqDriver.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="436">
+            <state relative-caret-position="990">
               <caret line="68" column="29" selection-start-line="68" selection-start-column="23" selection-end-line="68" selection-end-column="29" />
             </state>
           </provider>
@@ -41,13 +35,17 @@
       </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/index.php">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/rabbitmq_job.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-808">
+            <state relative-caret-position="30">
               <caret line="2" column="8" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
             </state>
           </provider>
@@ -100,7 +98,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="79" />
-    <option name="y" value="-1373" />
+    <option name="y" value="23" />
     <option name="width" value="1444" />
     <option name="height" value="884" />
   </component>
@@ -109,7 +107,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -121,6 +118,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -174,18 +172,19 @@
       <workItem from="1560999547603" duration="1834000" />
       <workItem from="1561037479926" duration="148000" />
       <workItem from="1561100205220" duration="1337000" />
-      <workItem from="1561179387205" duration="2013000" />
+      <workItem from="1561179387205" duration="2622000" />
+      <workItem from="1561273349806" duration="62000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34407000" />
+    <option name="totallyTimeSpent" value="35078000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="79" y="-1373" width="1444" height="884" extended-state="0" />
+    <frame x="79" y="23" width="1444" height="884" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2703281" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27389443" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -198,7 +197,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.30934343" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.30934343" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -295,24 +294,10 @@
     <entry file="file://$PROJECT_DIR$/vendor/psr/log/Psr/Log/LogLevel.php" />
     <entry file="file://$PROJECT_DIR$/vendor/psr/log/Psr/Log/NullLogger.php" />
     <entry file="file://$PROJECT_DIR$/vendor/psr/log/Psr/Log/LoggerTrait.php" />
-    <entry file="file://$PROJECT_DIR$/src/SwooleMultiRabbitMQCommand.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="8" selection-start-line="8" selection-end-line="12" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/RabbitmqDriver.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="436">
+        <state relative-caret-position="990">
           <caret line="68" column="29" selection-start-line="68" selection-start-column="23" selection-end-line="68" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/rabbitmq_job.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-808">
-          <caret line="2" column="8" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -323,8 +308,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/rabbitmq_job.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="8" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SwooleMultiRabbitMQCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="8" selection-start-line="8" selection-end-line="12" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test/index.php">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>

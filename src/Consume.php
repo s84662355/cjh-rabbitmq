@@ -9,7 +9,9 @@ class Consume{
 	private $channel = null;
 	private $queue = '';
 	private $consumer_tag = '';
- 
+
+	private $message_id_Arr = [];
+
 	public function __construct(AMQPChannel $channel,$queue,$consumer_tag,$callback)
 	{
           $this->callback = new $callback();
@@ -32,7 +34,30 @@ class Consume{
         $body = $msg->getBody();
         $body = json_decode($body,true);
 
+        if(empty($this->message_id_Arr[$body['message_id']]))
+            $this->message_id_Arr[$body['message_id']] = 0;
+
+        $this->message_id_Arr[$body['message_id']]++;
+
+
+       /// echo  $this->message_id_Arr[$body['message_id']];
+
+
         $res = call_user_func_array([$this->callback,'process_message'],[base64_decode($body['body']),$body['config']]);
+
+
+        //最多执行10次
+        if($this->message_id_Arr[$body['message_id']] > 10)
+        {
+            unset($this->message_id_Arr[$body['message_id']]);
+           return  $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+        }
+
+
+
+        //echo $body['message_id'];
+
+        //echo "   ";
 
         if($res == AbstractConsume::ACK)
         {

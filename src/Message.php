@@ -27,7 +27,8 @@ class Message{
 
         $data = [
            'body' => base64_encode($body) ,
-           'config' => $config
+           'config' => $config,
+           'message_id' => date('Ymdhis').uniqid().rand(100,1000000),
         ];
  
 		$this->amqp_msg = new AMQPMessage(json_encode($data),$this->config);

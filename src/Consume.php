@@ -33,11 +33,26 @@ class Consume{
 	{
         $body = $msg->getBody();
         $body = json_decode($body,true);
+		
+	if(!empty( $body['message_id'] ))
+	{
+		if(empty($this->message_id_Arr[$body['message_id']]))
+		    $this->message_id_Arr[$body['message_id']] = 0;
 
-        if(empty($this->message_id_Arr[$body['message_id']]))
-            $this->message_id_Arr[$body['message_id']] = 0;
+		$this->message_id_Arr[$body['message_id']]++;
 
-        $this->message_id_Arr[$body['message_id']]++;
+
+
+		//最多执行10次
+		if($this->message_id_Arr[$body['message_id']] > 10)
+		{
+		    unset($this->message_id_Arr[$body['message_id']]);
+		   return  $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+		}
+		
+	}
+
+ 
 
 
        /// echo  $this->message_id_Arr[$body['message_id']];
@@ -45,13 +60,7 @@ class Consume{
 
         $res = call_user_func_array([$this->callback,'process_message'],[base64_decode($body['body']),$body['config']]);
 
-
-        //最多执行10次
-        if($this->message_id_Arr[$body['message_id']] > 10)
-        {
-            unset($this->message_id_Arr[$body['message_id']]);
-           return  $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
-        }
+ 
 
 
 

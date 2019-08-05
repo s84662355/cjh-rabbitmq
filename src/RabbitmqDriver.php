@@ -4,7 +4,7 @@ namespace CustomRabbitmq;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Wire\AMQPTable;
-
+ 
 
 class RabbitmqDriver{
 
@@ -13,11 +13,15 @@ class RabbitmqDriver{
   	private $exchange_pool = [];
   	private $queue_pool = [];
   	private $publisher_instance = null;
+    private $redis = null;
+
+    private $connection_name = '';
 
   	public function __construct( $config )
     {
         ///
 	 	  $this->connection = new AMQPStreamConnection($config['host'],$config['port'], $config['username'], $config['password'],$config['vhost']);
+          $this->connection_name = $config['host'].$config['port'].$config['vhost'];
 		  $this->channel = $this->connection->channel();
     }
 
@@ -86,9 +90,11 @@ class RabbitmqDriver{
        return $this;
     }
 
-    public function consume($queue,$consumer_tag,$callback)
+    public function consume($queue,$consumer_tag,$callback,$max_count = 5)
     {
-       return new Consume($this->channel,$queue,$consumer_tag,$callback);
+       $consume = new Consume($this->channel,$queue,$consumer_tag,$callback);
+       $consume-> setRedis($this->redis,$this->connection_name,$max_count );
+       return $consume  ;
     }
 
 
@@ -105,6 +111,11 @@ class RabbitmqDriver{
     public function tx_rollback()
     {
         $this->channel->tx_rollback();
+    }
+
+    public function setRedis( $redis)
+    {
+        $this->redis = $redis;
     }
 
     public function __destruct()

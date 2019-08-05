@@ -12,6 +12,7 @@ class RabbitmqJob{
     private $default_driver = '';
     private $select_driver = '';
     private $config = [];
+    private $redis = null;
 
     public function __construct($config , $driver = false  )
     {
@@ -19,6 +20,11 @@ class RabbitmqJob{
         $this->default_driver = $config['default'];//config('rabbitmq_job.driver.default');
         $this->select_driver = $this->default_driver;
      ////   $this->driver();
+    }
+
+    public function setRedis($redis)
+    {
+        $this->redis = $redis;
     }
 
     ###切换连接
@@ -37,6 +43,7 @@ class RabbitmqJob{
         {
             $this->config_pool[$driver]  = $this->config['driver'][$driver];  ;//config('rabbitmq_job.driver.'.$driver);
             $this->factory_pool[$driver] = new RabbitmqDriver($this->config_pool[$driver]);
+            $this->factory_pool[$driver]->setRedis($this->redis);
         }
         return  $this->factory_pool[$driver];
     }
@@ -167,8 +174,17 @@ class RabbitmqJob{
                           //->consume($consume_driver['queue'],$consume_driver['consumer_tag'],$consume_driver['listener'])
                          // ->basic_consume();
         }
+        
+        $max_count = 5;
+         
+        if(!empty($consume_driver['max_count'] )) 
+            $max_count = $consume_driver['max_count'];
 
-        $rabbit_driver->consume($consume_driver['queue'],$consume_driver['consumer_tag'],$consume_driver['listener'])->basic_consume();
+        $consume = $rabbit_driver->consume($consume_driver['queue'],$consume_driver['consumer_tag'],$consume_driver['listener'],$max_count );
+
+
+
+        $consume ->basic_consume();
 
     }
 

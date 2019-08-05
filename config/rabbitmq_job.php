@@ -64,6 +64,7 @@ return [
                    'default' => env('RABBITMQ_QUEUE_DRIVER', 'first'),
                    'driver' => [
                        'first' => [
+                            'max_count' => 5,
                            'durable' => true,
                            'consumer_tag' => '1322423',
                            'queue' => '1322423',

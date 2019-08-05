@@ -35,7 +35,9 @@ class RabbitMQServiceProvider extends ServiceProvider
         $this->app->singleton(
             'RabbitMQJob',
             function (){
-                return new RabbitmqJob(config('rabbitmq_job'));
+                $job = new RabbitmqJob(config('rabbitmq_job'));
+                $job ->setRedis(app('redis'));
+                return $job ;
             }
         );
 

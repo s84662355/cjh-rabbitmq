@@ -3,6 +3,7 @@
 namespace CustomRabbitmq;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Channel\AMQPChannel;
+ 
 class Consume{
 
 	private $callback = '';
@@ -11,6 +12,9 @@ class Consume{
 	private $consumer_tag = '';
 
 	private $message_id_Arr = [];
+	private $redis = null;
+	private $prefix = '';
+	private $max_count = 5;
 
 	public function __construct(AMQPChannel $channel,$queue,$consumer_tag,$callback)
 	{
@@ -29,32 +33,46 @@ class Consume{
         }
 	}
 
+    public function setRedis(  $redis,$prefix = '',$max_count = 5)
+    {
+        $this->redis = $redis;
+        $this->prefix = $prefix;
+        $this->max_count = $max_count;
+    }
+
+
+
 	public function process_message(AMQPMessage $msg)
 	{
         $body = $msg->getBody();
         $body = json_decode($body,true);
+
+
+
+        if(empty($this->redis))
+        {
+            echo "bbbbbbb";
+        }
+
 		
-	if(!empty( $body['message_id'] ))
-	{
-		if(empty($this->message_id_Arr[$body['message_id']]))
-		    $this->message_id_Arr[$body['message_id']] = 0;
-
-		$this->message_id_Arr[$body['message_id']]++;
-
-
-
-		//最多执行10次
-		if($this->message_id_Arr[$body['message_id']] > 10)
+		if(!empty( $body['message_id']) && !empty($this->redis))
 		{
-		    unset($this->message_id_Arr[$body['message_id']]);
-		   return  $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+
+			$message_key = $this->prefix.$body['message_id'];
+
+            if($this->redis->incrby($message_key,1) > $this->max_count )
+            {
+                $this->redis->del($message_key);//true
+
+                echo "mnnn";
+               return   $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+            }
+
+            $this->redis->expire($message_key, 200);
+
 		}
-		
-	}
 
  
-
-
        /// echo  $this->message_id_Arr[$body['message_id']];
 
 

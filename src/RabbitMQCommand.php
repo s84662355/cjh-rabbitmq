@@ -15,7 +15,7 @@ use CustomRabbitmq\RabbitmqJob;
 class RabbitMQCommand  extends Command
 {
 
-    protected $signature = 'RabbitMQCommand {name?}  {--c=} {--q=} {--out=}';
+    protected $signature = 'RabbitMQCommand {name?}  {--c=} {--q=}  ';
 
     protected $description = ' php artisan RabbitMQCommand ';
 
@@ -32,13 +32,9 @@ class RabbitMQCommand  extends Command
 
         if(!empty($name))
         {
-            $out_file = $this->option('out');
-            if(empty( $out_file )){
-               echo "缺少out参数";
-               exit();
-            } 
+      
             $daemon = new Daemon($name);
-            $daemon->init( $out_file);
+            $daemon->init(  );
               
  
   

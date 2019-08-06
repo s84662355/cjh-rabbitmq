@@ -38,12 +38,10 @@ class RabbitMQCommand  extends Command
                exit();
             } 
             $daemon = new Daemon($name);
-            $daemon->init();
+            $daemon->init( $out_file);
               
  
-            fclose(STDOUT);
-            
-            $STDOUT = fopen("$out_file", "wb");
+  
             
         }
 

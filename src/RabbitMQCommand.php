@@ -32,10 +32,17 @@ class RabbitMQCommand  extends Command
 
         if(!empty($name))
         {
+            $out_file = $this->option('out');
+            if(empty( $out_file )){
+               echo "缺少out参数";
+               exit();
+            } 
             $daemon = new Daemon($name);
             $daemon->init();
+              
+ 
             fclose(STDOUT);
-            $out_file = $this->option('out');
+            
             $STDOUT = fopen("$out_file", "wb");
             
         }

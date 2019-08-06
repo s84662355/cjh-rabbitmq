@@ -21,7 +21,7 @@ Class Daemon{
      * 初始化一个守护进程
      * @throws Exception
      */
-    public function init(){
+    public function init($out_file){
 
         cli_set_process_title( $this->process_name );
         //创建一个子进程
@@ -58,5 +58,6 @@ Class Daemon{
         fclose(STDIN);
         fclose(STDOUT);
         fclose(STDERR);
+        $STDOUT = fopen("$out_file", "wb");
     }
 }

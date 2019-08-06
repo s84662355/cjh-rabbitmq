@@ -49,10 +49,7 @@ class Consume{
 
 
 
-        if(empty($this->redis))
-        {
-            echo "bbbbbbb";
-        }
+ 
 
 		
 		if(!empty( $body['message_id']) && !empty($this->redis))

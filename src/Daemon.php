@@ -21,7 +21,7 @@ Class Daemon{
      * 初始化一个守护进程
      * @throws Exception
      */
-    public function init( ){
+    public function init($handle ,$file_out){
 
         cli_set_process_title( $this->process_name );
         //创建一个子进程
@@ -55,9 +55,11 @@ Class Daemon{
             exit(0);
         }
         //由于守护进程用不到标准输入输出，关闭标准输入，输出，错误输出描述符
-        fclose(STDIN);
+       /// fclose(STDIN);
         fclose(STDOUT);
         fclose(STDERR);
+        $stdout = fopen($file_out, 'a+');
+        $handle->doHandle();
         
     }
 }

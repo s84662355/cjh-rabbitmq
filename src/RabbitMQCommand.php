@@ -15,7 +15,7 @@ use CustomRabbitmq\RabbitmqJob;
 class RabbitMQCommand  extends Command
 {
 
-    protected $signature = 'RabbitMQCommand {name?}  {--c=} {--q=}  ';
+    protected $signature = 'RabbitMQCommand {name?}  {--c=} {--q=}  {--out=}';
 
     protected $description = ' php artisan RabbitMQCommand ';
 
@@ -26,21 +26,28 @@ class RabbitMQCommand  extends Command
 
     public function handle()
     {
-        $connection = $this->option('c');
-        $queue      = $this->option('q');
+ 
         $name = $this->argument('name');
 
         if(!empty($name))
         {
-      
+            $file_out = $this->option('out');
             $daemon = new Daemon($name);
-            $daemon->init(  );
-              
- 
-  
-            
-        }
 
+
+            return   $daemon->init( $this,$file_out);
+              
+        }
+        
+
+        $this->doHandle( );
+ 
+    }
+
+    public function doHandle(  )
+    {
+        $connection = $this->option('c');
+        $queue      = $this->option('q');
         $job = app('RabbitMQJob');
         if(!empty($connection))  $job->select($connection);
         $queue = empty($queue) ? false : $queue;

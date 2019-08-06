@@ -15,7 +15,7 @@ use CustomRabbitmq\RabbitmqJob;
 class RabbitMQCommand  extends Command
 {
 
-    protected $signature = 'RabbitMQCommand {name?}  {--c=} {--q=}';
+    protected $signature = 'RabbitMQCommand {name?}  {--c=} {--q=} {--out=}';
 
     protected $description = ' php artisan RabbitMQCommand ';
 
@@ -34,6 +34,10 @@ class RabbitMQCommand  extends Command
         {
             $daemon = new Daemon($name);
             $daemon->init();
+            fclose(STDOUT);
+            $out_file = $this->option('out');
+            $STDOUT = fopen("$out_file", "wb");
+            
         }
 
         $job = app('RabbitMQJob');

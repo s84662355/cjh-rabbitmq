@@ -33,10 +33,8 @@ class RabbitMQCommand  extends Command
         {
             $file_out = $this->option('out');
             $daemon = new Daemon($name);
-
-
             return   $daemon->init( $this,$file_out);
-              
+            
         }
         
 

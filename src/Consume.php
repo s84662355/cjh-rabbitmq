@@ -45,7 +45,6 @@ class Consume{
 	public function process_message(AMQPMessage $msg)
 	{
 		$res = AbstractConsume::ACK;
-
         try{
 
             $body = $msg->getBody();
@@ -67,8 +66,6 @@ class Consume{
 
                 $this->redis->expire($message_key, 200);
             }
-
-
 
             $res = call_user_func_array([$this->callback,'process_message'],[base64_decode($body['body']),$body['config']]);
         }catch (\Exception $e)

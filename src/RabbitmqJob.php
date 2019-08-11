@@ -174,15 +174,14 @@ class RabbitmqJob{
                           //->consume($consume_driver['queue'],$consume_driver['consumer_tag'],$consume_driver['listener'])
                          // ->basic_consume();
         }
-        
         $max_count = 5;
-         
         if(!empty($consume_driver['max_count'] )) 
             $max_count = $consume_driver['max_count'];
 
         $consume = $rabbit_driver->consume($consume_driver['queue'],$consume_driver['consumer_tag'],$consume_driver['listener'],$max_count );
 
-
+        if(isset($consume_driver['log_path']))
+            $consume->setLogPath($consume_driver['log_path']);
 
         $consume ->basic_consume();
 

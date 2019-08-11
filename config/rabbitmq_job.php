@@ -69,6 +69,7 @@ return [
                            'consumer_tag' => '1322423',
                            'queue' => '1322423',
                            'listener' => 'App\TestConsume',
+                           'log_path' =>storage_path("logs/"  . "TestConsume.log"),
                            'exchange' => [
                               'name'  => '1111',
                               'type'  => 'direct',

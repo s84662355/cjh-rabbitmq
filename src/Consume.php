@@ -44,53 +44,57 @@ class Consume{
 
 	public function process_message(AMQPMessage $msg)
 	{
-        $body = $msg->getBody();
-        $body = json_decode($body,true);
+		$res = AbstractConsume::ACK;
+
+        try{
+
+            $body = $msg->getBody();
+            $body = json_decode($body,true);
 
 
-
- 
-
-		
-		if(!empty( $body['message_id']) && !empty($this->redis))
-		{
-
-			$message_key = $this->prefix.$body['message_id'];
-
-            if($this->redis->incrby($message_key,1) > $this->max_count )
+            if(!empty( $body['message_id']) && !empty($this->redis))
             {
-                $this->redis->del($message_key);//true
 
-           
-               return   $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+                $message_key = $this->prefix.$body['message_id'];
+
+                if($this->redis->incrby($message_key,1) > $this->max_count )
+                {
+                    $this->redis->del($message_key);//true
+
+
+                    return   $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+                }
+
+                $this->redis->expire($message_key, 200);
             }
 
-            $this->redis->expire($message_key, 200);
-
-		}
-
- 
-       /// echo  $this->message_id_Arr[$body['message_id']];
 
 
-        $res = call_user_func_array([$this->callback,'process_message'],[base64_decode($body['body']),$body['config']]);
+            $res = call_user_func_array([$this->callback,'process_message'],[base64_decode($body['body']),$body['config']]);
+        }catch (\Exception $e)
+        {
+            $res = AbstractConsume::REJECT;
+        }catch (\Throwable $throwable)
+        {
+            $res = AbstractConsume::REJECT;
+        }catch (\ParseError $parseError)
+        {
+            $res = AbstractConsume::REJECT;
+        }catch (\TypeError $typeError)
+        {
+            $res = AbstractConsume::REJECT;
+        }
 
- 
-
-
-
-        //echo $body['message_id'];
-
-        //echo "   ";
 
         if($res == AbstractConsume::ACK)
         {
            ///出列
             $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
         }else if($res == AbstractConsume::REJECT){
-            $msg->delivery_info['channel']->basic_reject($msg->delivery_info['delivery_tag'],true);
+
         }else if($res == AbstractConsume::CANCEL){
             $msg->delivery_info['channel']->basic_cancel($msg->delivery_info['consumer_tag']);
-        }   
+        }
+
 	}
 }

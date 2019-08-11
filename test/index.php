@@ -1,23 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: chenjiahao
- * Date: 2019-06-22
- * Time: 14:29
- */
-require('../vendor/autoload.php');
+class Apple {
+    public function firstMethod() { }
+    final protected function secondMethod() { }
+    private static function thirdMethod() { }
+    public function __construct()
+    {
+    }
 
-use CustomRabbitmq\RabbitmqJob;
-use CustomRabbitmq\RabbitmqDriver;
+    public function __call($name, $arguments)
+    {
+        // TODO: Implement __call() method.
+    }
+}
 
-$config = include '../config/rabbitmq_job';
-
-$job = new RabbitmqJob($config);
-
-
-$job->send("fsfds");
-
-
-
-
-
+$class = new ReflectionClass('Apple');
+$methods = $class->getMethods(ReflectionMethod::IS_PUBLIC  );
+var_dump($methods);
+?>

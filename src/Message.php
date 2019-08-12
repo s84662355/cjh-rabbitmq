@@ -31,7 +31,7 @@ class Message{
            'message_id' => date('Ymdhis').uniqid().rand(100,1000000),
         ];
  
-		$this->amqp_msg = new AMQPMessage(json_encode($data),$this->config);
+		$this->amqp_msg = new AMQPMessage(json_encode($data,JSON_UNESCAPED_UNICODE),$this->config);
 	}
 
     private function iniConfig(array $config = [])

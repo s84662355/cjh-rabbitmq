@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="7946a8e3-b421-4913-9aea-16f24c92ce9e" name="Default Changelist" comment="" />
+=======
+    <list default="true" id="7946a8e3-b421-4913-9aea-16f24c92ce9e" name="Default Changelist" comment="">
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/.idea/cjh-rabbitmq.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cjh-rabbitmq.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/Consume.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Consume.php" afterDir="false" />
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
+    </list>
+>>>>>>> 889b12ef5c4a946435aa74c68fd5798b1ed4bc00
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,11 +27,16 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RPCClient.php">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state relative-caret-position="114">
+              <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+=======
             <state relative-caret-position="210">
               <caret line="16" column="53" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="53" />
               <folding>
                 <element signature="e#32#79#0#PHP" expanded="true" />
               </folding>
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
             </state>
           </provider>
         </entry>
@@ -28,13 +44,24 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RPCServer.php">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state relative-caret-position="114">
+              <caret line="7" column="17" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="17" />
+=======
             <state relative-caret-position="120">
               <caret line="10" column="18" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
+        <entry file="file://$PROJECT_DIR$/test/index.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+=======
         <entry file="file://$PROJECT_DIR$/src/AbstractConsume.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
@@ -48,6 +75,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="225">
               <caret line="20" column="9" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
               <folding>
                 <element signature="e#120#141#0#PHP" expanded="true" />
               </folding>
@@ -56,6 +84,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+<<<<<<< HEAD
+        <entry file="file://$PROJECT_DIR$/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php">
+          <provider selected="true" editor-type-id="text-editor" />
+=======
         <entry file="file://$PROJECT_DIR$/src/Consume.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="570">
@@ -71,13 +103,19 @@
               <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
             </state>
           </provider>
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/LogService.php">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state relative-caret-position="608">
+              <caret line="39" column="29" selection-start-line="37" selection-start-column="15" selection-end-line="39" selection-end-column="29" />
+=======
             <state relative-caret-position="330">
               <caret line="34" column="55" selection-start-line="34" selection-start-column="55" selection-end-line="34" selection-end-column="55" />
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
               <folding>
                 <element signature="e#31#50#0#PHP" expanded="true" />
               </folding>
@@ -97,8 +135,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/index.php">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state relative-caret-position="38">
+              <caret line="2" column="8" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
+=======
             <state relative-caret-position="60">
               <caret line="4" column="45" lean-forward="true" selection-start-line="4" selection-start-column="45" selection-end-line="4" selection-end-column="45" />
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
             </state>
           </provider>
         </entry>
@@ -106,8 +149,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Common.php">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state relative-caret-position="57">
+              <caret line="8" selection-start-line="8" selection-end-line="12" selection-end-column="11" />
+=======
             <state relative-caret-position="75">
               <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
             </state>
           </provider>
         </entry>
@@ -149,11 +197,25 @@
       </list>
     </option>
   </component>
+<<<<<<< HEAD
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/php-amqplib/php-amqplib" />
+    </include_path>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="79" />
+    <option name="y" value="26" />
+    <option name="width" value="1444" />
+    <option name="height" value="881" />
+=======
   <component name="ProjectFrameBounds">
     <option name="x" value="-105" />
     <option name="y" value="-1373" />
     <option name="width" value="2237" />
     <option name="height" value="1187" />
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -191,7 +253,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../organization" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -244,18 +306,46 @@
       <workItem from="1561179387205" duration="2622000" />
       <workItem from="1561273349806" duration="62000" />
       <workItem from="1561425787911" duration="427000" />
+<<<<<<< HEAD
+      <workItem from="1565190320685" duration="597000" />
+      <workItem from="1565275603032" duration="590000" />
+      <workItem from="1565436153037" duration="826000" />
+=======
       <workItem from="1565402685040" duration="10013000" />
+<<<<<<< HEAD
       <workItem from="1565493693170" duration="3870000" />
+=======
+      <workItem from="1565493693170" duration="3841000" />
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
+>>>>>>> 889b12ef5c4a946435aa74c68fd5798b1ed4bc00
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="49388000" />
+=======
+<<<<<<< HEAD
+    <option name="totallyTimeSpent" value="37518000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="79" y="26" width="1444" height="881" extended-state="1" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29046243" />
+=======
+    <option name="totallyTimeSpent" value="49359000" />
+>>>>>>> 889b12ef5c4a946435aa74c68fd5798b1ed4bc00
   </component>
   <component name="ToolWindowManager">
     <frame x="-105" y="-1373" width="2237" height="1187" extended-state="0" />
     <layout>
+<<<<<<< HEAD
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18223235" />
+=======
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18223235" />
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
+>>>>>>> 889b12ef5c4a946435aa74c68fd5798b1ed4bc00
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -268,7 +358,15 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
+<<<<<<< HEAD
       <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.29223743" />
+=======
+<<<<<<< HEAD
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.31016043" />
+=======
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.29223743" />
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
+>>>>>>> 889b12ef5c4a946435aa74c68fd5798b1ed4bc00
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -331,6 +429,9 @@
     <entry file="file://$PROJECT_DIR$/vendor/psr/log/Psr/Log/LogLevel.php" />
     <entry file="file://$PROJECT_DIR$/vendor/psr/log/Psr/Log/NullLogger.php" />
     <entry file="file://$PROJECT_DIR$/vendor/psr/log/Psr/Log/LoggerTrait.php" />
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/src/RabbitmqDriver.php">
+=======
     <entry file="file://$PROJECT_DIR$/src/RabbitMQServiceProvider.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -352,36 +453,75 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SwooleMultiRabbitMQCommand.php">
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="8" selection-start-line="8" selection-end-line="12" selection-end-column="11" />
+        <state relative-caret-position="114">
+          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RabbitmqJob.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="114">
+=======
         <state relative-caret-position="90">
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
           <caret line="7" column="17" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RabbitmqDriver.php">
+    <entry file="file://$PROJECT_DIR$/test/index.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="304">
+          <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+          <folding>
+            <element signature="e#129#160#0#PHP" expanded="true" />
+          </folding>
+=======
         <state relative-caret-position="90">
           <caret line="8" column="20" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="20" />
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RPCClient.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="608">
+          <caret line="39" column="29" selection-start-line="37" selection-start-column="15" selection-end-line="39" selection-end-column="29" />
+=======
         <state relative-caret-position="210">
           <caret line="16" column="53" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="53" />
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
           <folding>
             <element signature="e#32#79#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/rabbitmq_job.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="8" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SwooleMultiRabbitMQCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="8" selection-start-line="8" selection-end-line="12" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Channel/AbstractChannel.php">
+      <provider selected="true" editor-type-id="text-editor" />
+=======
     <entry file="file://$PROJECT_DIR$/src/RPCServer.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -450,6 +590,7 @@
           <caret line="89" selection-start-line="89" selection-end-line="89" />
         </state>
       </provider>
+>>>>>>> 03537c31e6770e7a83bc794512382bc31b74c036
     </entry>
   </component>
 </project>

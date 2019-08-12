@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7946a8e3-b421-4913-9aea-16f24c92ce9e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Consume.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Consume.php" afterDir="false" />
-    </list>
+    <list default="true" id="7946a8e3-b421-4913-9aea-16f24c92ce9e" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +59,7 @@
         <entry file="file://$PROJECT_DIR$/src/Consume.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="570">
-              <caret line="89" column="12" selection-start-line="89" selection-start-column="12" selection-end-line="89" selection-end-column="12" />
+              <caret line="89" selection-start-line="89" selection-end-line="89" />
             </state>
           </provider>
         </entry>
@@ -247,18 +245,17 @@
       <workItem from="1561273349806" duration="62000" />
       <workItem from="1561425787911" duration="427000" />
       <workItem from="1565402685040" duration="10013000" />
-      <workItem from="1565493693170" duration="3841000" />
+      <workItem from="1565493693170" duration="3870000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49359000" />
+    <option name="totallyTimeSpent" value="49388000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-105" y="-1373" width="2237" height="1187" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18223235" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18223235" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -271,7 +268,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.29223743" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.29223743" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -450,7 +447,7 @@
     <entry file="file://$PROJECT_DIR$/src/Consume.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="570">
-          <caret line="89" column="12" selection-start-line="89" selection-start-column="12" selection-end-line="89" selection-end-column="12" />
+          <caret line="89" selection-start-line="89" selection-end-line="89" />
         </state>
       </provider>
     </entry>

@@ -10,7 +10,9 @@
     ],
     "require": {
         "php-amqplib/php-amqplib": "^2.9",
-        "monolog/monolog": "~1.12"
+        "monolog/monolog": "~1.12",
+        "swoft/framework": "~2.0.0",
+        "swoft/connection-pool": "~2.0.0"
     },
     "autoload": {
         "psr-4": {

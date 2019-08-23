@@ -3,73 +3,48 @@ namespace CustomRabbitmq;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Exception\AMQPConnectionClosedException;
+use PhpAmqpLib\Channel\AbstractChannel as Channel;
 
-class RPCClient{
-    private  $connection = null;
-    private  $channel = null;
-    private  $response_queue = [];
+class RPCClient {
+    private $channel;
+    private $callback_queue;
+    private $response;
+    private $corr_id;
+    private $request_queue;
 
-    public function __construct( AMQPStreamConnection $connection) {
-    	$this->connection = $connection;
-    	$this->channel = $this->connection->channel();
+
+    public function __construct(Channel $channel,string $request_queue,string $connect_name = null) {
+        $this->channel = $channel;
+        $this->request_queue = $request_queue;
+        list($this->callback_queue, ,) = $this->channel->queue_declare(
+            "", false, false, true, false);
+        $this->channel->basic_consume(
+            $this->callback_queue, '', false, false, false, false,
+            array($this, 'on_response'));
+        $this->corr_id = md5($connect_name.time().uniqid().rand(1000,100000).implode('',$_ENV));
     }
 
-	public function __call(string $name,array $args){
-        try{
-            return $this->publish($name,$args);
-        }catch (AMQPConnectionClosedException $e)
-        {
-            throw  new \Exception($e->getMessage()) ;
+
+    public function on_response($rep) {
+        if($rep->get('correlation_id') == $this->corr_id) {
+            $this->response = $rep->body;
         }
-	}
+    }
 
-	private function publish(string $queue,array $args)
-    {
-        $corr_id = uniqid();
-
-        $callback_queue = $this->getCallBackQueue($queue);
+    public function call($n,$method) {
+        $this->response = null;
+        $this->corr_id = uniqid();
 
         $msg = new AMQPMessage(
-            Common::encryption($args),
-            array('correlation_id' => $corr_id,
-                'reply_to' => $callback_queue)
+            (string) $n,
+            array('correlation_id' => $this->corr_id,
+                'request_method' => $method,
+                'reply_to' => $this->callback_queue)
         );
-        $this->channel->basic_publish($msg, '',$queue);
-        $body = $this->getResponse($queue,$corr_id);
-
-        return Common::decrypt($body);
-    }
-
-    private function getCallBackQueue($name)
-    {
-        $callback_queue = '';
-        list($callback_queue, ,) = $this->channel->queue_declare(
-                "", false, false, true, false);
-        $this->response_queue[$name] = $callback_queue;
-        return $this->response_queue[$name];
-    }
-
-    private function getResponse(string $queue,string $corr_id)
-    {
-        $callback_queue = $this->getCallBackQueue($queue);
-
-        $response_data = false;
-
-        $this->channel->basic_consume(
-            $callback_queue, '', false, false, false, false,
-            function ($response) use ( $corr_id,&$response_data) {
-                if($response->get('correlation_id') == $corr_id) {
-                    $response_data = $response->body;
-                }
-            });
-        while(!$response_data) {
+        $this->channel->basic_publish($msg, '', $this->request_queue);
+        while(!$this->response) {
             $this->channel->wait();
         }
-
-        return $response_data;
+        return  $this->response;
     }
-
-
-
-
-}
+};

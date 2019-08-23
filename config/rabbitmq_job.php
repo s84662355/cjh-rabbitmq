@@ -1,7 +1,7 @@
 <?php
 
 return [
-      'default' => env('RABBITMQ_MSG_DRIVER', 'first'),
+      'default' => env('RABBITMQ_DRIVER', 'first'),
       'driver' => [
           'first' => [
               'host' =>  env('RABBITMQ_HOST', '127.0.0.1'),
@@ -55,7 +55,6 @@ return [
                              'name' => 'dead-queue',
                          ]
                      ],
-
 
                   ],
               ],

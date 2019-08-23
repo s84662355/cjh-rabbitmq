@@ -17,12 +17,15 @@ class RabbitmqDriver{
 
     private $connection_name = '';
 
+    private $config = null;
+
   	public function __construct( $config )
     {
         ///
 	 	  $this->connection = new AMQPStreamConnection($config['host'],$config['port'], $config['username'], $config['password'],$config['vhost']);
           $this->connection_name = $config['host'].$config['port'].$config['vhost'];
 		  $this->channel = $this->connection->channel();
+		  $this->config = $config;
     }
 
     public function exchange($name,$type = 'direct',$durable = true)
@@ -32,7 +35,7 @@ class RabbitmqDriver{
     		$this->channel->exchange_declare($name,$type,false,$durable,false);
     		$exchange_pool[$name] = true;
     	}
-      return $this;
+    	return $this;
     }
 
     public function cache_queue($name,$durable,$dead_ex,$dead_key,$ttl)
@@ -79,15 +82,14 @@ class RabbitmqDriver{
 
     public function send($body,$config)
     {
-       $this->publisher();
-       $this->publisher_instance->send(new Message($body,$config));
+        $this->publisher()->send(new Message($body,$config));
        return $this;
     }
 
     public function publisher()
     {
        if($this->publisher_instance == null) $this->publisher_instance = new Publisher($this->channel);
-       return $this;
+       return $this->publisher_instance;
     }
 
     public function consume($queue,$consumer_tag,$callback,$max_count = 5)
@@ -95,22 +97,6 @@ class RabbitmqDriver{
        $consume = new Consume($this->channel,$queue,$consumer_tag,$callback);
        $consume-> setRedis($this->redis,$this->connection_name,$max_count );
        return $consume  ;
-    }
-
-
-    public function tx_select()
-    {
-        $this->channel->tx_select();
-    }
-
-    public function tx_commit()
-    {
-        $this->channel->tx_commit();
-    }
-
-    public function tx_rollback()
-    {
-        $this->channel->tx_rollback();
     }
 
     public function setRedis( $redis)
@@ -123,4 +109,25 @@ class RabbitmqDriver{
         $this->channel->close();
         $this->connection->close();
     }
+
+    public function getChannel()
+    {
+        return $this->channel;
+    }
+
+    public function refurbish()
+    {
+        try{
+            $this->exchange_pool = [];
+            $this->queue_pool = [];
+            $this->publisher_instance = null;
+            $this->connection->reconnect();
+            $this->channel = $this->connection->channel();
+        }catch (\Exception $exception){
+
+        }
+    }
+
+
+
 }

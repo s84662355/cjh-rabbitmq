@@ -3,7 +3,7 @@ namespace CustomRabbitmq;
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Channel\AMQPChannel;
-
+use PhpAmqpLib\Exception\AMQPConnectionClosedException;
 
 class RabbitmqJob{
  
@@ -13,6 +13,7 @@ class RabbitmqJob{
     private $select_driver = '';
     private $config = [];
     private $redis = null;
+    private $retry_count = 0;
 
     public function __construct($config , $driver = false  )
     {
@@ -70,23 +71,6 @@ class RabbitmqJob{
         return $this;
     }
 
-    
-    public function tx_select()
-    {
-        $this->driver()->tx_select();
-    }
-
-
-    public function tx_commit()
-    {
-        $this->driver()->tx_commit();
-    }
-
-
-    public function tx_rollback()
-    {
-        $this->driver()->tx_rollback();
-    }
 
 
     private function message($body,$rabbit_driver,$config)
@@ -159,34 +143,39 @@ class RabbitmqJob{
     public function consume($consume_driver = false)
     {
         $rabbit_driver = $this->driver();
+        try{
 
-        $driver_config  = $this->driver_config();
-        if(!$consume_driver)  $consume_driver = $driver_config['consume']['default'];
-        $consume_driver = $driver_config['consume']['driver'][$consume_driver];
+            $driver_config  = $this->driver_config();
+            if(!$consume_driver)  $consume_driver = $driver_config['consume']['default'];
+            $consume_driver = $driver_config['consume']['driver'][$consume_driver];
+            $rabbit_driver->queue($consume_driver['queue'],$consume_driver['durable']);
+            if(!empty($consume_driver['exchange']))
+            {
+                $exchange = $consume_driver['exchange'];
+                $rabbit_driver->exchange($exchange['name'], $exchange['type'] ,$exchange['durable'])
+                    ->QueueBind($consume_driver['queue'],$exchange['name'],$exchange['routing_key']);
+                //->consume($consume_driver['queue'],$consume_driver['consumer_tag'],$consume_driver['listener'])
+                // ->basic_consume();
+            }
+            $max_count = 5;
+            if(!empty($consume_driver['max_count'] ))
+                $max_count = $consume_driver['max_count'];
+            $consume = $rabbit_driver->consume($consume_driver['queue'],$consume_driver['consumer_tag'],$consume_driver['listener'],$max_count );
+            if(isset($consume_driver['log_path']))
+                $consume->setLogPath($consume_driver['log_path']);
 
-        $rabbit_driver->queue($consume_driver['queue'],$consume_driver['durable']);
-        if(!empty($consume_driver['exchange']))
+            $this->retry_count = 0;
+            $consume ->basic_consume();
+        }catch (AMQPConnectionClosedException $exception)
         {
-            $exchange = $consume_driver['exchange'];
-            $rabbit_driver->exchange($exchange['name'], $exchange['type'] ,$exchange['durable'])
-                          ->QueueBind($consume_driver['queue'],$exchange['name'],$exchange['routing_key']);
-
-                          //->consume($consume_driver['queue'],$consume_driver['consumer_tag'],$consume_driver['listener'])
-                         // ->basic_consume();
+            $this->retry_count++;
+            if($this->retry_count > 5)
+            {
+                echo "rabbitmq 重新连接失败";
+                return;
+            }
+            $rabbit_driver->refurbish();
+            $this->consume($consume_driver);
         }
-        $max_count = 5;
-        if(!empty($consume_driver['max_count'] )) 
-            $max_count = $consume_driver['max_count'];
-
-        $consume = $rabbit_driver->consume($consume_driver['queue'],$consume_driver['consumer_tag'],$consume_driver['listener'],$max_count );
-
-        if(isset($consume_driver['log_path']))
-            $consume->setLogPath($consume_driver['log_path']);
-
-        $consume ->basic_consume();
-
     }
-
-
-
 }

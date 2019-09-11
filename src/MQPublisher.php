@@ -1,14 +1,12 @@
 <?php  
 
-namespace CustomRabbitmq;
+namespace CustomRabbitmq ;
+use PhpAmqpLib\Channel\AbstractChannel;
 use PhpAmqpLib\Channel\AMQPChannel;
-use CustomRabbitmq\Message;
+
 use PhpAmqpLib\Message\AMQPMessage;
-class Publisher{
 
-	private $confirm = true;
-
-	///private $msg_queue = array();
+class MQPublisher{
 
 	private $channel = null;
 
@@ -16,11 +14,11 @@ class Publisher{
 
 	private $confirm_ask = true;
 
-	public function __construct( AMQPChannel $channel , $confirm = true )
+	public function __construct( AMQPChannel $channel ,$confirm = true  )
 	{
 		$this->channel = $channel;
 
-        $this->confirm = $confirm;
+        $this->confirm = true;
 
 		if($confirm)
         {
@@ -48,17 +46,12 @@ class Publisher{
         $this->confirm_ask = false;
     }
 
-
-
-
-    /*
-    public function push(Message $msg)
+    public function getChannel() :  AMQPChannel
     {
-        array_push($this->msg_queue, $msg);
+         return $this->channel;
     }
-    */
 
-	public function send(Message $msg)
+	public function send(MQMessage $msg)
     {
         if($this->confirm)
         {
@@ -71,8 +64,5 @@ class Publisher{
             $this->channel->basic_publish($msg->getAmqpMsg(), $msg->getExchange(), $msg->getRoutingKey());
         }
     }
-
-
-
 
 }

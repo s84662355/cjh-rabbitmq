@@ -1,8 +1,8 @@
 <?php
-namespace CustomRabbitmq;
+namespace CustomRabbitmq ;
 use PhpAmqpLib\Message\AMQPMessage;
 
-class Message{
+class MQMessage{
 
 	private  $durable = true;
 	private  $amqp_msg= null;
@@ -13,8 +13,9 @@ class Message{
     private  $config = [
         'content_type' => 'text/plain',
         'delivery_mode'=> AMQPMessage::DELIVERY_MODE_PERSISTENT,
-        'message_id' => "1234567890",
     ];
+
+    private  $str = 'abcsfsklfj345678843UBGYVCRDXZAQXWSCEDRVFf';
 
     /*
      expiration
@@ -26,9 +27,9 @@ class Message{
         $this->iniConfig( $config );
 
         $data = [
-           'body' => base64_encode($body) ,
-           'config' => $config,
-           'message_id' => md5(date('Ymdhis').uniqid().rand(100,1000000). implode('',$_ENV) )  ,
+            'body' => base64_encode($body) ,
+            'config' => $config,
+            'message_id' => $config['message_id']
         ];
  
 		$this->amqp_msg = new AMQPMessage(json_encode($data,JSON_UNESCAPED_UNICODE),$this->config);
@@ -36,14 +37,10 @@ class Message{
 
     private function iniConfig(array $config = [])
     {
-        if(empty($config['durable'])){
-            $this->durable = false;
-            $this->config['delivery_mode'] = AMQPMessage::DELIVERY_MODE_NON_PERSISTENT;
-        }
+        ###持久化
+        $this->config['delivery_mode'] = AMQPMessage::DELIVERY_MODE_PERSISTENT;
 
-        if(!empty($config['expiration'])){
-              $this->config['expiration'] = $config['expiration'];
-        }
+        $this->config['message_id'] =  date('Ymdhis'). md5(rand(10000,100000).uniqid().str_shuffle($this->str)) ;
 
 
         if(!empty($config['exchange'])){
@@ -57,9 +54,10 @@ class Message{
 
         if(!empty($config['queue'])){
             $this->queue = $config['queue'];
-        } 
-
+        }
     }
+
+
 
 	public function getDurable()
 	{
@@ -85,32 +83,5 @@ class Message{
     {
     	return $this->exchange;
     }
-
-
-    /*
-    public function setRoutingKey($routing_key = '')
-    {
-    	$this->routing_key = $routing_key;
-    }
-
-    public function setExchange($exchange = '')
-    {
-    	$this->exchange = $exchange;
-    }
-
-    */
-    
-
-	/*
-
-	public function __get($key)
-	{
-		if(isset($this->$key)){
-			return $this->$key;
-		}
-		return null;
-	}*/
-
-
 
 }

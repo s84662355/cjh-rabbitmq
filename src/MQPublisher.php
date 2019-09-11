@@ -33,16 +33,23 @@ class MQPublisher{
         $this->channel->set_ack_handler([$this,'ack_handler']);
 
         $this->channel->set_nack_handler([$this,'nack_handler']);
+
+        $this->channel->set_return_listener([$this,'set_return_listener']);
     }
 
 
     public function ack_handler(AMQPMessage $message)
     {
 
-        var_dump($message);
+
         $this->confirm_ask = true;
 
 
+    }
+
+    public function set_return_listener($replyCode, $replyText, $exchange, $routingKey, AMQPMessage $message)
+    {
+         throw new \Exception('rabbitmq confirm 失败');
     }
 
     public function nack_handler(AMQPMessage $message)
@@ -59,17 +66,8 @@ class MQPublisher{
     {
         if($this->confirm)
         {
-            $this->channel->basic_publish($msg->getAmqpMsg(), $msg->getExchange(), $msg->getRoutingKey());
-            $this->channel->wait_for_pending_acks();
-
-
-            if($this->confirm_ask == false)
-            {
-                throw new \Exception('rabbitmq confirm 失败');
-
-            }
-
-
+            $this->channel->basic_publish($msg->getAmqpMsg(), $msg->getExchange(), $msg->getRoutingKey(),true);
+            $this->channel->wait_for_pending_acks_returns();
         }else{
             $this->channel->basic_publish($msg->getAmqpMsg(), $msg->getExchange(), $msg->getRoutingKey());
         }

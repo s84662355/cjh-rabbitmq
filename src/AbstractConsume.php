@@ -19,10 +19,8 @@ abstract class AbstractConsume{
 	const REJECT = 300;
 	const CANCEL = 400;
 	const REJECT_OUT = 500;
-	const NACK = 600;
-	const NACK_OUT = 700;
-	const RECOVERTRUE = 800;
-	const RECOVERFALSE = 900;
+	const RECOVERTRUE = 600;
+	const RECOVERFALSE = 700;
 
 
 	abstract public function process_message( $body,$config) ;

@@ -11,6 +11,7 @@ use PhpAmqpLib\Channel\AbstractChannel;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Closure;
 use Throwable;
+use PhpAmqpLib\Wire\AMQPTable;
 
 class MQDriver
 {
@@ -71,6 +72,8 @@ class MQDriver
     public function queue(string $name,  $durable = true , array $config = [])
     {
         if (empty($this->queue_pool[$name])) {
+
+
             $table = false;
             if (!empty($config)) {
                 $table = new AMQPTable();
@@ -80,11 +83,22 @@ class MQDriver
             }
 
             if ($table) {
-                $this->channel->queue_declare($name, false, $durable, false
-                    , false, false, $table);
+                $this->channel->queue_declare(
+                    $name,
+                    false,
+                    $durable,
+                    false,
+                    false,
+                    false,
+                    $table);
             } else {
-                $this->channel->queue_declare($name, false, $durable, false
-                    , false);
+                $this->channel->queue_declare(
+                    $name,
+                    false,
+                    $durable,
+                    false,
+                    false,
+                    false);
             }
             $this->queue_pool[$name] = true;
         }
@@ -94,12 +108,15 @@ class MQDriver
 
     public function cache_queue(string $name,  $durable,string  $dead_ex, string  $dead_key,int $expires)
     {
-        $tale = new AMQPTable();
-        $tale->set('x-dead-letter-exchange', $dead_ex);
-        $tale->set('x-dead-letter-routing-key',$dead_key);
-        $tale->set('x-expires',$expires);
 
-        return  $this->queue($name , $durable,$tale);
+
+        $table = [
+            'x-dead-letter-exchange' => $dead_ex,
+            'x-dead-letter-routing-key' => $dead_key,
+            'x-message-ttl' => intval( $expires) ,
+        ];
+
+        return  $this->queue($name , $durable, $table);
     }
 
     public function QueueBind(string $queue, string $exchange, string $routing_key)
@@ -187,7 +204,8 @@ class MQDriver
         $msg_config = [];
         if(!empty($config['delayed']))
         {
-             $msg_config['queue'] = 'cache_'.$config['queue'];
+
+             $msg_config['queue'] = 'cache_'.$config['queue']['name'];
         }else if(!empty($config['exchange'])){
 
             $this->exchange($config['exchange']['name'], $config['exchange']['type']  );

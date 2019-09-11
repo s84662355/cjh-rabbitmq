@@ -38,7 +38,11 @@ class MQPublisher{
 
     public function ack_handler(AMQPMessage $message)
     {
+
+        var_dump($message);
         $this->confirm_ask = true;
+
+
     }
 
     public function nack_handler(AMQPMessage $message)
@@ -57,8 +61,14 @@ class MQPublisher{
         {
             $this->channel->basic_publish($msg->getAmqpMsg(), $msg->getExchange(), $msg->getRoutingKey());
             $this->channel->wait_for_pending_acks();
+
+
             if($this->confirm_ask == false)
+            {
                 throw new \Exception('rabbitmq confirm 失败');
+
+            }
+
 
         }else{
             $this->channel->basic_publish($msg->getAmqpMsg(), $msg->getExchange(), $msg->getRoutingKey());

@@ -71,9 +71,13 @@ class MQConsume{
 
         try{
             $body = $msg->getBody();
+
             $body = json_decode($body,true);
+
             $body_data =  base64_decode($body['body']);
             $log_str.= $body_data;
+
+
 
             if(
                 (

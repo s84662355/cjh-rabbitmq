@@ -16,16 +16,6 @@ return [
                  'driver' => [
                      '1' => [
                          'durable' => true,
-                         'expiration' => 0,
-                          /*
-                         'exchange' =>
-                             [
-                            'name' => '1111',
-                            'type' => 'direct',
-                            'durable' => true,
-                            'routing_key' => '1111',
-                         ],
-                          */
                          'queue' => [
                             'durable' => true,
                             'name' => '1322423',
@@ -33,7 +23,6 @@ return [
                      ],
                      '2' => [
                          'durable' => true,
-                         'expiration' => 0,
                          'exchange' => [
                              'name' => '22222',
                              'type' => 'direct',
@@ -46,15 +35,15 @@ return [
                          ]
                      ],
 
-                     '3' => [
+                     'delayed' => [
+                         'delayed' => true,
                          'durable' => true,
-                         'expiration' => 0,
-                         'timedelay'  => 5000,
                          'queue' => [
                              'durable' => true,
-                             'name' => 'dead-queue',
+                             'name' => 'delayed',
                          ]
                      ],
+
 
                   ],
               ],
@@ -63,18 +52,19 @@ return [
                    'default' => env('RABBITMQ_QUEUE_DRIVER', 'first'),
                    'driver' => [
                        'first' => [
-                            'max_count' => 5,
+                           'max_count' => 5,
                            'durable' => true,
                            'consumer_tag' => '1322423',
                            'queue' => '1322423',
+                           'timedelay'  => 5000,
                            'listener' => 'App\TestConsume',
                            'log_path' =>storage_path("logs/"  . "TestConsume.log"),
-                           'exchange' => [
-                              'name'  => '1111',
-                              'type'  => 'direct',
-                              'durable' => true,
-                              'routing_key' => '1111',
+                           'arguments' => [
+                                 'x-message-ttl' => 100000,
+                                 'x-expires'     => 100000,
+                                 'x-max-length'  => 10000,
                            ],
+
 
                         ],
                     ],

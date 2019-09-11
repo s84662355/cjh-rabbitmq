@@ -7,9 +7,7 @@
  */
 
 namespace CustomRabbitmq;
-
 use Illuminate\Console\Command;
-use CustomRabbitmq\RabbitmqJob;
 
 
 class RabbitMQCommand  extends Command
@@ -26,9 +24,7 @@ class RabbitMQCommand  extends Command
 
     public function handle()
     {
- 
         $name = $this->argument('name');
-
         if(!empty($name))
         {
             $file_out = $this->option('out');
@@ -36,10 +32,7 @@ class RabbitMQCommand  extends Command
             return   $daemon->init( $this,$file_out);
             
         }
-        
-
-        $this->doHandle( );
- 
+        $this->doHandle();
     }
 
     public function doHandle(  )

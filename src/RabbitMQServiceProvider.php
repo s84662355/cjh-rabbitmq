@@ -11,6 +11,7 @@ namespace CustomRabbitmq;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use CustomRabbitmq\MQJob;
 
 
 class RabbitMQServiceProvider extends ServiceProvider
@@ -20,8 +21,6 @@ class RabbitMQServiceProvider extends ServiceProvider
      */
     protected $commands = [
          RabbitMQCommand::class,
-        // SwooleRabbitMQCommand::class,
-       ///  SwooleMultiRabbitMQCommand::class,
     ];
 
 
@@ -35,13 +34,13 @@ class RabbitMQServiceProvider extends ServiceProvider
         $this->app->singleton(
             'RabbitMQJob',
             function (){
-                $job = new RabbitmqJob(config('rabbitmq_job'));
+                $job = new MQJob(config('rabbitmq_job'));
                 $job ->setRedis(app('redis'));
                 return $job ;
             }
         );
-
     }
+
 
 
     /**

@@ -29,7 +29,7 @@ class MQMessage{
         $data = [
             'body' => base64_encode($body) ,
             'config' => $config,
-            'message_id' => $config['message_id']
+            'message_id' => $this->config['message_id']
         ];
  
 		$this->amqp_msg = new AMQPMessage(json_encode($data,JSON_UNESCAPED_UNICODE),$this->config);

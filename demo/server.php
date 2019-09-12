@@ -43,6 +43,25 @@ $config = [
 
 
                     ],
+
+                    '2' => [
+                        'max_count' => 5,
+                        'durable' => true,
+                        'consumer_tag' => '333333333',
+                        'queue' => '3333333333333333',
+
+                        'listener' => 'Test',
+                        /// 'log_path' =>storage_path("logs/"  . "TestConsume.log"),
+                        'arguments' => [
+                            //  'x-message-ttl' => 100000,
+
+                            'x-max-length'  => 10000,
+                        ],
+
+
+                    ],
+
+
                 ],
             ],
         ]
@@ -65,5 +84,5 @@ class Test extends AbstractConsume
 
 $job = new MQJob($config );
 
-$job->consume();
+$job->consume( );
 

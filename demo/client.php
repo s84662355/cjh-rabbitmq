@@ -28,7 +28,7 @@ $config = [
                         'durable' => true,
                         'delayed' => true,
                         'queue' => [
-                            'durable' => true,
+
                             'name' => 'aaaaa423',
                         ]
                     ],
@@ -48,12 +48,12 @@ $config = [
                         ]
                     ],
 
-                    'delayed' => [
-                        'delayed' => true,
+                    '3' => [
+
                         'durable' => true,
                         'queue' => [
                             'durable' => true,
-                            'name' => 'delayed',
+                            'name' => '3333333333333333',
                         ]
                     ],
 
@@ -91,4 +91,18 @@ $config = [
 
 $job = new MQJob($config );
 
-$job->send('ssdsdsdsdsdss');
+ //$job->send('ssdsdsdsdsdss');
+//return ;
+ for ($i = 0 ;$i < 50000;$i++)
+  $job->send('ssdsdsdsdsdss',false,false);
+///
+///
+
+$job->transaction(function ($a){
+
+   // for ($i = 0 ;$i < 50000;$i++)
+      ///  $a->send('ssdsdsdsdsdss');
+
+
+
+});

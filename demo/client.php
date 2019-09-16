@@ -93,8 +93,8 @@ $job = new MQJob($config );
 
  //$job->send('ssdsdsdsdsdss');
 //return ;
- for ($i = 0 ;$i < 50000;$i++)
-  $job->send('ssdsdsdsdsdss',false,false);
+ for ($i = 0 ;$i < 1;$i++)
+  $job->send('shdsdss',false,false);
 ///
 ///
 

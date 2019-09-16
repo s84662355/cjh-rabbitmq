@@ -46,7 +46,4 @@ class RabbitMQCommand  extends Command
     }
 
 
-
-
-
 }

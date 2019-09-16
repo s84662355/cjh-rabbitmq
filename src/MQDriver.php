@@ -154,10 +154,10 @@ class MQDriver
         }
     }
 
-    public function getPublisher(string $type) : MQPublisher
+    public function getPublisher(string $type,$confirm = true) : MQPublisher
     {
         if (empty($this->publisher_instance[$type])) {
-            $this->publisher_instance[$type] = new MQPublisher($this->connection->channel());
+            $this->publisher_instance[$type] = new MQPublisher($this->connection->channel(),$confirm);
         }
         return $this->publisher_instance[$type];
     }
@@ -194,8 +194,16 @@ class MQDriver
 
     public function tx_send(string $body, $msg_driver_name = false  )
     {
-        $config = $this->publish_driver_config[$msg_driver_name];
-        return $this->publisher('transaction')->send(new MQMessage($body, $config));
+        if($msg_driver_name)
+        {
+            $config = $this->publish_driver_config[$msg_driver_name];
+        }else{
+            $config = $this->publish_driver_config[$this->default_publish];
+        }
+
+        return $this->message($body, $config ,$this->publisher('transaction'));
+
+
     }
 
 
@@ -208,11 +216,30 @@ class MQDriver
              $msg_config['queue'] = 'cache_'.$config['queue']['name'];
         }else if(!empty($config['exchange'])){
 
-            $this->exchange($config['exchange']['name'], $config['exchange']['type']  );
+
+            //// $this->exchange($config['exchange']['name'], $config['exchange']['type']  );
+
+
+            #####################
+           /// 交换机需要提前创建，代码里面不创建交换机
+            #####################
+
+
+
+            /*
+            $this->QueueBind(
+                $config['queue']['name'],
+                $config['exchange']['name'],
+                  $config['exchange']['routing_key']
+            );
+            */
+
             $msg_config = [
-                'routing_key' => $config['exchange']['routing_key'],
+               'routing_key' => $config['exchange']['routing_key'],
                 'exchange' => $config['exchange']['name'],
             ];
+
+
         }else if(!empty($config['queue'])){
 
             $msg_config = [
@@ -234,8 +261,27 @@ class MQDriver
 
         $this->init_consume($config);
 
-        $consume = new MQConsume($this->channel,$config['queue'],$config['consumer_tag'],$config['listener']);
-        $consume-> setRedis($this->redis,$this->connection_name,$config['max_count'] );
+        $consume = new MQConsume(
+            $this->channel,
+            $config['queue'],
+            empty($config['consumer_tag']) ? $config['listener'] :  $config['consumer_tag'] ,
+            $config['listener']
+        );
+
+
+        if(empty($config['max_count'] )){
+            $consume-> setRedis(
+                $this->redis,
+                $this->connection_name
+            );
+        }else{
+            $consume-> setRedis(
+                $this->redis,
+                $this->connection_name,
+                intval( $config['max_count'] )
+            );
+        }
+
 
         if(!empty($config['log_path'])){
             $consume->setLogPath($config['log_path']);
@@ -274,10 +320,23 @@ class MQDriver
                 'dead-exchange',
                 'dead_'.$config['queue'].'_key'
             );
+        }else{
+            $this->queue
+            (
+                $config['queue'],
+                $config['durable'],
+                $config['arguments']
+            );
+
+            if(!empty($config['exchange'])){
+                $this->QueueBind(
+                    $config['queue'],
+                    $config['exchange'],
+                    $config['queue']
+                );
+            }
         }
 
     }
-
-
 
 }

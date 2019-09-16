@@ -18,15 +18,15 @@ class MQPublisher{
 	{
 		$this->channel = $channel;
 
-        $this->confirm = true;
+        $this->confirm = $confirm;
 
 		if($confirm)
         {
             $this->channel->confirm_select();
             $this->setHandler();
         }
-
 	}
+
 
 	public function setHandler()
     {
@@ -40,22 +40,22 @@ class MQPublisher{
 
     public function ack_handler(AMQPMessage $message)
     {
-
-
         $this->confirm_ask = true;
 
-
     }
+
 
     public function set_return_listener($replyCode, $replyText, $exchange, $routingKey, AMQPMessage $message)
     {
-         throw new \Exception('rabbitmq confirm 失败');
+         throw new MQException("routingKey : {$routingKey} 发送失败");
     }
+
 
     public function nack_handler(AMQPMessage $message)
     {
-        $this->confirm_ask = false;
+        throw new MQException('rabbitmq 发送失败');
     }
+
 
     public function getChannel() :  AMQPChannel
     {
@@ -69,6 +69,7 @@ class MQPublisher{
             $this->channel->basic_publish($msg->getAmqpMsg(), $msg->getExchange(), $msg->getRoutingKey(),true);
             $this->channel->wait_for_pending_acks_returns();
         }else{
+
             $this->channel->basic_publish($msg->getAmqpMsg(), $msg->getExchange(), $msg->getRoutingKey());
         }
     }

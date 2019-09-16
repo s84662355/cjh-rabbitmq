@@ -34,7 +34,7 @@ $config = [
                         'queue' => 'aaaaa423',
                         'timedelay'  => 5000,
                         'listener' => 'Test',
-                       /// 'log_path' =>storage_path("logs/"  . "TestConsume.log"),
+                         'log_path' => "TestConsume.log" ,
                         'arguments' => [
                           //  'x-message-ttl' => 100000,
 
@@ -51,7 +51,7 @@ $config = [
                         'queue' => '3333333333333333',
 
                         'listener' => 'Test',
-                        /// 'log_path' =>storage_path("logs/"  . "TestConsume.log"),
+                        'log_path' => "TestConsume.log" ,
                         'arguments' => [
                             //  'x-message-ttl' => 100000,
 

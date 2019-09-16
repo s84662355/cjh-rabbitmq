@@ -20,7 +20,7 @@ class MQMessage{
     /*
      expiration
     */
-	public function __construct($body,array $config = [])
+	public function __construct(string $body,array $config = [])
 	{
 		$this->body = $body;
 
